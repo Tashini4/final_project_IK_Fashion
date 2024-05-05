@@ -1,0 +1,50 @@
+package lk.ijse.repository;
+
+import lk.ijse.db.DbConnection;
+import lk.ijse.model.Salary;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SalaryRepo {
+    public static List<Salary> getAll() throws SQLException {
+        String sql = "SELECT * FROM salary";
+
+        PreparedStatement pvsm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        ResultSet resultSet = pvsm.executeQuery();
+
+        List<Salary> salaryList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            String employeeId = resultSet.getString(1);
+            String salaryId = resultSet.getString(2);
+            String date = resultSet.getString(3);
+            String amount = resultSet.getString(4);
+
+
+            Salary salary = new Salary(employeeId, salaryId, date, amount);
+            salaryList.add(salary);
+        }
+        return salaryList;
+    }
+
+    public static boolean update(Salary salary) throws SQLException {
+        String sql = "UPDATE salary SET employeeId = ?, salaryId = ?, date = ? , amount = ?  WHERE salaryId = ?";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, salary.getEmployeeID());
+        pstm.setObject(2, salary.getSalaryID());
+        pstm.setObject(3, salary.getDate());
+        pstm.setObject(4, salary.getAmount());
+
+
+        return pstm.executeUpdate() > 0;
+    }
+}
+
+

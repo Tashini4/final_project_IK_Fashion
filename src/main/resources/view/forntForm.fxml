@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="rootNode" prefHeight="700.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.FrontFormController">
+   <children>
+      <AnchorPane prefHeight="700.0" prefWidth="685.0">
+         <children>
+            <ImageView fitHeight="700.0" fitWidth="685.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="700.0" fitWidth="881.0">
+               <image>
+                  <Image url="@../icon/tashi.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="915.0" layoutY="179.0" text="Welcome" textFill="#e00233">
+         <font>
+            <Font name="System Bold" size="54.0" />
+         </font>
+      </Label>
+      <Label layoutX="990.0" layoutY="253.0" text="Ik Fashion">
+         <font>
+            <Font name="Abyssinica SIL" size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="949.0" layoutY="336.0" mnemonicParsing="false" onAction="#btnGetStartedOnAction" prefHeight="56.0" prefWidth="195.0" text="Get Started">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

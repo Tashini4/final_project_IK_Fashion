@@ -14,8 +14,8 @@ public class UserRepo {
         pvsm.setObject(1, user.getUserName());
         ResultSet resultSet = pvsm.executeQuery();
         if (resultSet.next()) {
-            String pw = resultSet.getNString(1);
-            if (user.getPassword().equals(pw)) return true;
+            String password = resultSet.getNString(1);
+            if (user.getPassword().equals(password)) return true;
         }
 
         return false;

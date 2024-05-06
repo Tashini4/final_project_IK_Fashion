@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="rootNode" prefHeight="700.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.FrontFormController">
    <children>
       <AnchorPane prefHeight="700.0" prefWidth="685.0">
@@ -30,7 +29,7 @@
             <Font name="Abyssinica SIL" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="949.0" layoutY="336.0" mnemonicParsing="false" onAction="#btnGetStartedOnAction" prefHeight="56.0" prefWidth="195.0" text="Get Started">
+      <Button layoutX="949.0" layoutY="336.0" mnemonicParsing="false" onAction="#btnGetStartedOnAction" prefHeight="56.0" prefWidth="195.0" stylesheets="@../css/Style.css" text="Get Started">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>

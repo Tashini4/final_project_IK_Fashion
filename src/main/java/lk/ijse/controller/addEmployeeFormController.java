@@ -160,7 +160,7 @@ public class addEmployeeFormController {
         String email= txtEmail.getText();
         String contact = txtContact.getText();
         String address = txtAddress.getText();
-        String gender = (String) cmbGender.getValue();
+        String gender = String.valueOf(cmbGender.getValue());
 
 
         Employee employee = new Employee(id, name,email,contact,address,gender);

@@ -54,7 +54,7 @@
                   <Font size="19.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="94.0" layoutY="485.0" onAction="#btnUpdateOnaction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #c0392b;" text="Update" textFill="#f4f0f0">
+            <JFXButton layoutX="94.0" layoutY="485.0" onAction="#btnUpdateOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #c0392b;" text="Update" textFill="#f4f0f0">
                <font>
                   <Font size="19.0" />
                </font>
@@ -86,7 +86,7 @@
             <Blend />
          </effect>
       </TableView>
-      <JFXButton layoutX="1049.0" layoutY="618.0" prefHeight="57.0" prefWidth="135.0" style="-fx-background-color: #2c3e50;" text="Back" textFill="#f1e6e6">
+      <JFXButton layoutX="1049.0" layoutY="618.0" onAction="#btnBackOnAction" prefHeight="57.0" prefWidth="135.0" style="-fx-background-color: #2c3e50;" text="Back" textFill="#f1e6e6">
          <font>
             <Font size="20.0" />
          </font>

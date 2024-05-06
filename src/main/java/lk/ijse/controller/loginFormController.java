@@ -3,7 +3,6 @@ package lk.ijse.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -32,7 +31,7 @@ public class loginFormController {
         String password = txtPassword.getText();
 
         try {
-            Boolean check = UserRepo.check(new User(userName, password, password));
+            Boolean check = UserRepo.check(new User(userName, password));
             if (check) {
                 navigationToTheDashboard();
                 new Alert(Alert.AlertType.CONFIRMATION, "Sucessfull login").show();
@@ -45,7 +44,7 @@ public class loginFormController {
     }
 
     private void navigationToTheDashboard() throws IOException {
-        AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/dashBoardForm.fxml"));
+        AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/dashboardForm.fxml"));
         Scene scene = new Scene(rootNode);
 
         Stage stage = (Stage) this.rootNode.getScene().getWindow();

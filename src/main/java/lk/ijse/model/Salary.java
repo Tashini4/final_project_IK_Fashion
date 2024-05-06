@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Salary {
-    private  String employeeID;
-    private String salaryID;
+    private  String employeeId;
+    private String salaryId;
     private String date;
     private String amount;
 

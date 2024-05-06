@@ -33,18 +33,35 @@ public class SalaryRepo {
     }
 
     public static boolean update(Salary salary) throws SQLException {
-        String sql = "UPDATE salary SET employeeId = ?, salaryId = ?, date = ? , amount = ?  WHERE salaryId = ?";
+        String sql = "UPDATE salary SET  employeeId = ?, salaryDate = ?, salaryAmount = ? WHERE salaryId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, salary.getEmployeeID());
-        pstm.setObject(2, salary.getSalaryID());
-        pstm.setObject(3, salary.getDate());
-        pstm.setObject(4, salary.getAmount());
+        PreparedStatement pvsm= connection.prepareStatement(sql);
 
+        pvsm.setObject(1, salary.getEmployeeId());
+        pvsm.setObject(2, salary.getDate());
+        pvsm.setObject(3, salary.getAmount());
+        pvsm.setObject(4, salary.getSalaryId());
 
-        return pstm.executeUpdate() > 0;
+        return pvsm.executeUpdate() > 0;
     }
-}
+
+    public static boolean save(Salary salary) throws SQLException {
+        String sql = "INSERT INTO salary VALUES (?,?,?,?)";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, salary.getEmployeeId());
+        pvsm.setObject(2, salary.getSalaryId());
+        pvsm.setObject(3, salary.getDate());
+        pvsm.setObject(4, salary.getAmount());
+
+
+
+        return pvsm.executeUpdate() > 0;
+    }
+
+    }
+
 
 

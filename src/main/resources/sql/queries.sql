@@ -56,7 +56,7 @@ create table employeeTask(
 
 create table inventory(
                           inventoryId VARCHAR(5) PRIMARY KEY,
-                          QTY INT,
+                          qty INT,
                           costPrice DECIMAL(10,3),
                           sellingPrice DECIMAL(10,3),
                           supplierId VARCHAR(5),
@@ -87,7 +87,7 @@ create table orderItem(
                           itemId VARCHAR(5),
                           orderId VARCHAR(5),
                           qty INT,
-                          unitprice DECIMAL(10,3),
+                          unitPrice DECIMAL(10,3),
                           total DECIMAL(8,3),
                           foreign key (itemId) references items(itemId)on DELETE cascade on UPDATE cascade,
                           foreign key (orderId) references orders(orderId)on UPDATE cascade on DELETE cascade
@@ -109,3 +109,14 @@ create table users(
 
 insert into users values ('U001','Chamindu','12345');
 insert into users values ('U002','Indi','23456');
+
+create table register(
+                          registerId VARCHAR(10) PRIMARY KEY,
+                          registerName VARCHAR(50) ,
+                          registerPosition VARCHAR(50) ,
+                          registerPassword VARCHAR(30)
+);
+
+INSERT INTO register VALUES('R001','Tashini','cashier','tashi2002###');
+
+

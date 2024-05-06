@@ -33,21 +33,21 @@ public class CustomerRepo {
     }
 
     public static boolean update(Customer customer) throws SQLException {
-        String sql = "UPDATE customers SET name = ?, address = ?, contact = ? , email = ? WHERE customerID = ?";
+        String sql = "UPDATE customers SET customerName = ?, customerAddress = ?, customerContact = ? , customerEmail = ? WHERE customerId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, customer.getName());
-        pstm.setObject(2, customer.getAddress());
-        pstm.setObject(3, customer.getContact());
-        pstm.setObject(4, customer.getEmail());
-        pstm.setObject(5, customer.getId());
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, customer.getName());
+        pvsm.setObject(2, customer.getAddress());
+        pvsm.setObject(3, customer.getContact());
+        pvsm.setObject(4, customer.getEmail());
+        pvsm.setObject(5, customer.getId());
 
-        return pstm.executeUpdate() > 0;
+        return pvsm.executeUpdate() > 0;
     }
 
     public static Customer searchById(String id) throws SQLException {
-        String sql = "SELECT * FROM customers WHERE id = ?";
+        String sql = "SELECT * FROM customers WHERE customerId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -71,7 +71,7 @@ public class CustomerRepo {
     }
 
     public static boolean delete(String id) throws SQLException {
-        String sql = "DELETE FROM customers WHERE customerID = ?";
+        String sql = "DELETE FROM customers WHERE customerId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);

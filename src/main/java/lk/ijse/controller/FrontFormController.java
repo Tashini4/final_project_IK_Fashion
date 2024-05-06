@@ -13,16 +13,14 @@ public class FrontFormController {
 
     @FXML
     private AnchorPane rootNode;
+
     @FXML
     void btnGetStartedOnAction(ActionEvent event) throws IOException {
-        AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/loginForm.fxml"));
-        Scene scene = new Scene(rootNode);
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginForm.fxml"));
+        Stage stage = (Stage) rootNode.getScene().getWindow();
 
-        Stage stage = (Stage) this.rootNode.getScene().getWindow();
-        stage.setScene(scene);
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("login Form");
         stage.centerOnScreen();
-        stage.setTitle(" login Form");
-
     }
-
 }

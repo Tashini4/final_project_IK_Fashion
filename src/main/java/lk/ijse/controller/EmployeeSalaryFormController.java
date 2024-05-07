@@ -65,6 +65,7 @@ public class EmployeeSalaryFormController {
         txtSalaryId.setText("");
         txtDate.setText("");
         txtAmount.setText("");
+        cmbEmployeeId.setValue("");
     }
 
     @FXML

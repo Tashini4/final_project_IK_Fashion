@@ -109,6 +109,7 @@ public class addEmployeeFormController {
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
+
         clearFields();
     }
 
@@ -180,6 +181,7 @@ private void clearFields() {
     txtEmail.setText("");
     txtContact.setText("");
     txtAddress.setText("");
+    cmbGender.setValue("");
 }
 
 

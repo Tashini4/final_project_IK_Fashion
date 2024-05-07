@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="765.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.AddSupplierFormController">
+<AnchorPane fx:id="rootNode" prefHeight="765.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.AddSupplierFormController">
    <children>
       <Label layoutX="359.0" layoutY="38.0" text="Add Supplier Manage System">
          <font>
@@ -23,7 +22,7 @@
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="243.0" layoutY="130.0" prefHeight="28.0" prefWidth="247.0" />
+      <TextField fx:id="txtId" layoutX="243.0" layoutY="130.0" prefHeight="28.0" prefWidth="247.0" />
       <Label layoutX="84.0" layoutY="170.0" text="Supplier Name :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
@@ -39,29 +38,29 @@
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="243.0" layoutY="170.0" prefHeight="28.0" prefWidth="247.0" />
-      <TextField layoutX="243.0" layoutY="209.0" prefHeight="28.0" prefWidth="247.0" />
-      <TextField layoutX="243.0" layoutY="252.0" prefHeight="28.0" prefWidth="247.0" />
+      <TextField fx:id="txtName" layoutX="243.0" layoutY="170.0" prefHeight="28.0" prefWidth="247.0" />
+      <TextField fx:id="txtEmail" layoutX="243.0" layoutY="209.0" prefHeight="28.0" prefWidth="247.0" />
+      <TextField fx:id="txtAddress" layoutX="243.0" layoutY="252.0" prefHeight="28.0" prefWidth="247.0" />
       <Label layoutX="564.0" layoutY="130.0" text="Supplier Contact :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="745.0" layoutY="130.0" prefHeight="28.0" prefWidth="247.0" />
-      <TableView layoutX="43.0" layoutY="318.0" prefHeight="422.0" prefWidth="962.0">
+      <TextField fx:id="txtContact" layoutX="745.0" layoutY="130.0" prefHeight="28.0" prefWidth="247.0" />
+      <TableView fx:id="tblSupplier" layoutX="43.0" layoutY="318.0" prefHeight="422.0" prefWidth="962.0">
         <columns>
-          <TableColumn prefWidth="194.54618072509766" text="supplerID " />
-          <TableColumn prefWidth="200.00079345703125" text="supplier Name" />
-            <TableColumn prefWidth="191.81887817382812" text="supplier Email" />
-            <TableColumn prefWidth="186.36444091796875" text="supplier Address" />
-            <TableColumn prefWidth="192.7279052734375" text="supplier Contact" />
+          <TableColumn fx:id="colSupplierId" prefWidth="194.54618072509766" text="supplerID " />
+          <TableColumn fx:id="colSupplierName" prefWidth="200.00079345703125" text="supplier Name" />
+            <TableColumn fx:id="colSupplierEmail" prefWidth="191.81887817382812" text="supplier Email" />
+            <TableColumn fx:id="colSupplierAddress" prefWidth="186.36444091796875" text="supplier Address" />
+            <TableColumn fx:id="colSupplierContact" prefWidth="192.7279052734375" text="supplier Contact" />
         </columns>
       </TableView>
-      <Button layoutX="548.0" layoutY="186.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="85.0" text="Save" />
-      <Button layoutX="648.0" layoutY="186.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="85.0" text="Delete" />
-      <Button layoutX="762.0" layoutY="186.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="85.0" text="Update" />
-      <Button layoutX="876.0" layoutY="186.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="85.0" text="Clear" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" text="   Back" />
+      <Button layoutX="548.0" layoutY="186.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="44.0" prefWidth="85.0" text="Save" />
+      <Button layoutX="648.0" layoutY="186.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="44.0" prefWidth="85.0" text="Delete" />
+      <Button layoutX="762.0" layoutY="186.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="44.0" prefWidth="85.0" text="Update" />
+      <Button layoutX="876.0" layoutY="186.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="44.0" prefWidth="85.0" text="Clear" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="35.0" prefWidth="85.0" text="   Back" />
       <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="14.0" layoutY="19.0">
          <image>
             <Image url="@../icon/icons8-back-50.png" />

@@ -76,6 +76,11 @@
       </AnchorPane>
       <AnchorPane fx:id="rootNode" layoutX="262.0" prefHeight="765.0" prefWidth="1210.0">
          <children>
+            <ImageView fitHeight="765.0" fitWidth="1210.0">
+               <image>
+                  <Image url="@../icon/Screenshot%202024-05-06%20230943%20(1).png" />
+               </image>
+            </ImageView>
             <Label layoutX="30.0" layoutY="37.0" prefHeight="18.0" prefWidth="123.0" text="Dashboard" underline="true">
                <font>
                   <Font name="System Bold" size="20.0" />

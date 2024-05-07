@@ -1,4 +1,4 @@
-/*package lk.ijse.controller;
+package lk.ijse.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.model.Order;
 import lk.ijse.model.tm.OrderTm;
 import lk.ijse.repository.OrderRepo;
 
@@ -79,47 +80,6 @@ public class OrderFormController {
     @FXML
     private TextField txtQty;
 
-    private void initialize(){
-        SetCellValueFactory();
-        loadAllOrder();
-    }
-
-    private void loadAllOrder() {
-        ObservableList<OrderTm> obList = FXCollections.observableArrayList();
-
-        try {
-            List<OrderTm> ps = OrderRepo.getAll();
-            for (Order order : ps) {
-                OrderTm tm = new OrderTm(
-                        order.getItemId(),
-                        order.getDescription(),
-                        order.getUnitPrice(),
-                        order.getQty(),
-                        order.getTotal(),
-                        order.getAction()
-
-                );
-
-                obList.add(tm);
-            }
-
-            tblPlaceOrder.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void SetCellValueFactory() {
-        colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("btnRemove"));
-    }
-
-
-
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
 
@@ -146,4 +106,4 @@ public class OrderFormController {
 
     }
 
-}*/
+}

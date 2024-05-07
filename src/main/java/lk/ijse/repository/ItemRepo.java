@@ -4,6 +4,7 @@ import lk.ijse.db.DbConnection;
 import lk.ijse.model.Item;
 
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,9 +34,44 @@ public class ItemRepo {
         }
         return itemlist;
     }
+    public static boolean add(Item item) throws SQLException {
+        String sql = "INSERT INTO items VALUES(?, ?, ?, ? , ?, ?)";
 
-    public static boolean save(Item item) {
-        return false;
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, item.getItemId());
+        pvsm.setObject(2, item.getDescription());
+        pvsm.setObject(3, item.getColor());
+        pvsm.setObject(4, item.getSize());
+        pvsm.setObject(5, item.getPrice());
+        pvsm.setObject(6, item.getInventoryId());
+
+        return pvsm.executeUpdate() > 0;
+    }
+
+    public static boolean delete(String id) throws SQLException {
+        String sql = "DELETE FROM items WHERE itemId = ?";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, id);
+
+        return pvsm.executeUpdate() > 0;
+    }
+
+    public static boolean update(Item item) throws SQLException {
+        String sql = "UPDATE items SET itemDescription = ?, color = ? , size = ? , price = ?, inventoryId = ? WHERE itemId = ?";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, item.getItemId());
+        pvsm.setObject(2, item.getDescription());
+        pvsm.setObject(3, item.getColor());
+        pvsm.setObject(4, item.getSize());
+        pvsm.setObject(5, item.getPrice());
+        pvsm.setObject(6, item.getInventoryId());
+
+        return pvsm.executeUpdate() > 0;
     }
 }
 

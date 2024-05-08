@@ -33,9 +33,9 @@ public class InventoryRepo {
         ResultSet resultSet = pvsm.executeQuery();
         if (resultSet.next()) {
             String inventoryId = resultSet.getString(1);
-            String qty = resultSet.getString(2);
-            String costPrice = resultSet.getString(3);
-            String sellingPrice = resultSet.getString(4);
+            int qty = Integer.parseInt(resultSet.getString(2));
+            int costPrice = Integer.parseInt(resultSet.getString(3));
+            int sellingPrice = Integer.parseInt(resultSet.getString(4));
             String  supplierId = resultSet.getString(5);
 
             return new Inventory(inventoryId,qty,costPrice,sellingPrice,supplierId);

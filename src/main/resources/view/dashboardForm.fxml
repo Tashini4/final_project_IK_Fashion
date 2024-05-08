@@ -12,7 +12,7 @@
    <children>
       <AnchorPane prefHeight="765.0" prefWidth="262.0" style="-fx-background-color: #535c68;" styleClass="backgroundColour1">
          <children>
-            <ImageView fitHeight="105.0" fitWidth="132.0" layoutX="76.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="105.0" fitWidth="132.0" layoutX="62.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icon/Layer%200%20Frame%20(1).png" />
                </image>
@@ -93,7 +93,7 @@
                </image>
             </ImageView>
             <Label layoutX="783.0" layoutY="28.0" text="Search" />
-            <AnchorPane layoutX="26.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: #535c68;">
+            <AnchorPane layoutX="26.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: white;">
                <children>
                   <Label layoutX="15.0" layoutY="81.0" prefHeight="25.0" prefWidth="190.0" text="Customer Count">
                      <font>
@@ -112,7 +112,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="319.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: #535c68;">
+            <AnchorPane layoutX="319.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: white;">
                <children>
                   <Label layoutX="58.0" layoutY="79.0" text="Order Count">
                      <font>
@@ -131,7 +131,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="624.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: #535c68;">
+            <AnchorPane layoutX="624.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: white;">
                <children>
                   <Label layoutX="64.0" layoutY="80.0" text="Sales Count">
                      <font>
@@ -150,7 +150,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="948.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: #535c68;">
+            <AnchorPane layoutX="948.0" layoutY="139.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: white;">
                <children>
                   <Label layoutX="63.0" layoutY="79.0" text="Item Count">
                      <font>
@@ -169,7 +169,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="26.0" layoutY="319.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: #535c68;">
+            <AnchorPane layoutX="26.0" layoutY="319.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: white;">
                <children>
                   <Label layoutX="69.0" layoutY="77.0" text="User Count">
                      <font>
@@ -188,7 +188,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="948.0" layoutY="306.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: #535c68;">
+            <AnchorPane layoutX="948.0" layoutY="306.0" prefHeight="127.0" prefWidth="220.0" style="-fx-background-color: white;">
                <children>
                   <Label fx:id="lblEmployeeCount" layoutX="106.0" layoutY="21.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="92.0" text="0">
                      <font>

@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class ItemTm {
     private String inventoryId;
-    private String itemid;
+    private String itemId;
     private String description;
     private String color;
     private String size;
-    private String price;;
+    private String price;
+    private String qtyOnHand;
 }

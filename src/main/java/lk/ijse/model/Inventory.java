@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Inventory {
     private String inventoryId;
-    private String qty;
-    private String costPrice;
-    private String sellingPrice;
+    private int qty;
+    private int costPrice;
+    private int sellingPrice;
     private String supplierId;
 }

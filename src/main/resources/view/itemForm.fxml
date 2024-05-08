@@ -46,27 +46,27 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbSize" layoutX="842.0" layoutY="111.0" onAction="#cmbSizeOnAction" prefHeight="25.0" prefWidth="191.0" />
-      <Button layoutX="602.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="44.0" prefWidth="100.0" text="Update">
+      <Button layoutX="602.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #eb2f06;" text="Update" textFill="#b7b3b3">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="726.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="44.0" prefWidth="100.0" text="Delete">
+      <Button layoutX="726.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #079992;" text="Delete" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="474.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="44.0" prefWidth="100.0" text="Add">
+      <Button layoutX="474.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #b71540;" text="Add" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="842.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="44.0" prefWidth="100.0" text="Clear">
+      <Button layoutX="842.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #4a69bd;" text="Clear" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="907.0" layoutY="717.0" mnemonicParsing="false" onAction="#btnExitOnAction" prefHeight="36.0" prefWidth="116.0" text="Exit">
+      <Button layoutX="907.0" layoutY="717.0" mnemonicParsing="false" onAction="#btnExitOnAction" prefHeight="36.0" prefWidth="116.0" style="-fx-background-color: #fa983a;" text="Exit">
          <font>
             <Font size="21.0" />
          </font>
@@ -79,13 +79,20 @@
       <TextField fx:id="txtPrice" layoutX="841.0" layoutY="176.0" prefHeight="25.0" prefWidth="192.0" />
       <TableView fx:id="tblItem" layoutX="41.0" layoutY="312.0" prefHeight="385.0" prefWidth="985.0">
         <columns>
-          <TableColumn fx:id="colItemId" prefWidth="139.09143829345703" text="Item Id" />
-          <TableColumn fx:id="colDescription" prefWidth="131.81866455078125" text="Description" />
-            <TableColumn fx:id="colColor" prefWidth="166.36419677734375" text="Color" />
-            <TableColumn fx:id="colSize" prefWidth="142.72775268554688" text="Size" />
-            <TableColumn fx:id="colPrice" prefWidth="187.27325439453125" text="Price" />
-            <TableColumn fx:id="colInventoryId" prefWidth="220.91009521484375" text="Inventory Id" />
+          <TableColumn fx:id="colItemId" prefWidth="110.00043487548828" text="Item Id" />
+          <TableColumn fx:id="colDescription" prefWidth="161.81878662109375" text="Description" />
+            <TableColumn fx:id="colColor" prefWidth="123.6368408203125" text="Color" />
+            <TableColumn fx:id="colSize" prefWidth="121.81863403320312" text="Size" />
+            <TableColumn fx:id="colPrice" prefWidth="139.09136962890625" text="Price" />
+            <TableColumn fx:id="colQtyOnHand" prefWidth="146.3641357421875" text="QtyOnHand" />
+            <TableColumn fx:id="colInventoryId" prefWidth="175.4552001953125" text="Inventory Id" />
         </columns>
       </TableView>
+      <Label layoutX="54.0" layoutY="232.0" text="QtyOnHand :">
+         <font>
+            <Font name="Abyssinica SIL" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtQtyOnHand" layoutX="178.0" layoutY="233.0" prefHeight="25.0" prefWidth="192.0" />
    </children>
 </AnchorPane>

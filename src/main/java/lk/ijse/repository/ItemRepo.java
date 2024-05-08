@@ -2,6 +2,7 @@ package lk.ijse.repository;
 
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.Item;
+import lk.ijse.model.OrderItem;
 
 
 import java.sql.Connection;
@@ -27,9 +28,10 @@ public class ItemRepo {
             String color = resultSet.getString(3);
             String size = resultSet.getString(4);
             String price = resultSet.getString(5);
-            String inventoryId = resultSet.getString(6);
+            String qtyOnHand = resultSet.getString(6);
+            String inventoryId = resultSet.getString(7);
 
-            Item item = new Item(itemId,description,color,size,price,inventoryId);
+            Item item = new Item(itemId,description,color,size,price,qtyOnHand,inventoryId);
             itemlist.add(item);
         }
         return itemlist;
@@ -44,7 +46,8 @@ public class ItemRepo {
         pvsm.setObject(3, item.getColor());
         pvsm.setObject(4, item.getSize());
         pvsm.setObject(5, item.getPrice());
-        pvsm.setObject(6, item.getInventoryId());
+        pvsm.setObject(6, item.getQtyOnHand());
+        pvsm.setObject(7, item.getInventoryId());
 
         return pvsm.executeUpdate() > 0;
     }
@@ -60,7 +63,7 @@ public class ItemRepo {
     }
 
     public static boolean update(Item item) throws SQLException {
-        String sql = "UPDATE items SET itemDescription = ?, color = ? , size = ? , price = ?, inventoryId = ? WHERE itemId = ?";
+        String sql = "UPDATE items SET itemDescription = ?, color = ? , size = ? , price = ?, qtyOnHand = ?, inventoryId = ? WHERE itemId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
@@ -69,9 +72,72 @@ public class ItemRepo {
         pvsm.setObject(3, item.getColor());
         pvsm.setObject(4, item.getSize());
         pvsm.setObject(5, item.getPrice());
-        pvsm.setObject(6, item.getInventoryId());
+        pvsm.setObject(6, item.getQtyOnHand());
+        pvsm.setObject(7, item.getInventoryId());
 
         return pvsm.executeUpdate() > 0;
     }
-}
+
+    public static List<String> getIds() throws SQLException {
+        String sql = "SELECT itemId FROM items";
+        PreparedStatement pvsm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+
+        List<String> idList = new ArrayList<>();
+
+        ResultSet resultSet = pvsm.executeQuery();
+        while (resultSet.next()) {
+            String id = resultSet.getString("itemId");
+            idList.add(id);
+        }
+        return idList;
+    }
+
+    public static Item searchById(String id) throws SQLException {
+        String sql = "SELECT * FROM items WHERE itemId = ?";
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setString(1, id);
+        ResultSet resultSet= pvsm.executeQuery();
+
+        if (resultSet.next()) {
+            String itemId = resultSet.getString("itemId");
+            String description = resultSet.getString("Description");
+            String color = resultSet.getString("color");
+            String size = resultSet.getString("size");
+            String price = resultSet.getString("price");
+            String qtyOnHand = resultSet.getString("qtyOnHand");
+            String inventoryId = resultSet.getString("inventoryId");
+
+            Item item = new Item(itemId,description,color,size,price,qtyOnHand,inventoryId);
+
+            return item;
+        }
+        return null;
+    }
+
+    public static boolean update1(List<OrderItem> odList) throws SQLException {
+        for (OrderItem od : odList) {
+            boolean isUpdateQty = updateQty(od.getItemId(), od.getQty());
+            if(!isUpdateQty) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    private static boolean updateQty(String itemId, int qty) throws SQLException {
+        String sql = "UPDATE items SET qty_on_hand = qty_on_hand - ? WHERE itemId= ?";
+
+        PreparedStatement pvsm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
+
+        pvsm.setInt(1, qty);
+        pvsm.setString(2, itemId);
+
+        return pvsm.executeUpdate() > 0;
+    }
+    }
+
+
 

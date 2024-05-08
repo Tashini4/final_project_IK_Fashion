@@ -1,5 +1,6 @@
-package lk.ijse.model;
+package lk.ijse.model.tm;
 
+import com.jfoenix.controls.JFXButton;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,13 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Item {
-    private String inventoryId;
+
+public class CartTm {
     private String itemId;
     private String description;
-    private String color;
-    private String size;
-    private String price;
-    private String qtyOnHand;
-
+    private int qty;
+    private int unitPrice;
+    private int total;
+    private JFXButton btnRemove;
 }

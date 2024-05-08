@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="rootNode" prefHeight="765.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.CustomerFormController">
    <children>
-      <AnchorPane layoutX="26.0" layoutY="80.0" prefHeight="605.0" prefWidth="532.0" style="-fx-background-color: #ffb8b8;">
+      <AnchorPane layoutX="26.0" layoutY="80.0" prefHeight="605.0" prefWidth="532.0" style="-fx-background-color: #ced6e0;">
          <children>
             <TextField fx:id="txtId" layoutX="240.0" layoutY="52.0" prefHeight="35.0" prefWidth="268.0" />
             <Label layoutX="63.0" layoutY="112.0" prefHeight="28.0" prefWidth="176.0" text="Customer Name :" textFill="#101010">
@@ -44,22 +44,22 @@
                   <Font name="Abyssinica SIL" size="20.0" />
                </font>
             </Label>
-            <JFXButton layoutX="94.0" layoutY="383.0" onAction="#btnSaveOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #c0392b;" text="Save" textFill="#f4f0f0">
+            <JFXButton layoutX="94.0" layoutY="383.0" onAction="#btnSaveOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #3B3B98;" text="Save" textFill="#f4f0f0">
                <font>
                   <Font size="19.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="306.0" layoutY="383.0" onAction="#btnDeleteOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #c0392b;" text="Delete" textFill="#f4f0f0">
+            <JFXButton layoutX="306.0" layoutY="383.0" onAction="#btnDeleteOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #EA2027;" text="Delete" textFill="#f4f0f0">
                <font>
                   <Font size="19.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="94.0" layoutY="485.0" onAction="#btnUpdateOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #c0392b;" text="Update" textFill="#f4f0f0">
+            <JFXButton layoutX="94.0" layoutY="485.0" onAction="#btnUpdateOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #FC427B;" text="Update" textFill="#f4f0f0">
                <font>
                   <Font size="19.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="306.0" layoutY="485.0" onAction="#btnClearOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #c0392b;" text="clear" textFill="#f4f0f0">
+            <JFXButton layoutX="306.0" layoutY="485.0" onAction="#btnClearOnAction" prefHeight="67.0" prefWidth="135.0" style="-fx-background-color: #B33771;" text="clear" textFill="#f4f0f0">
                <font>
                   <Font size="19.0" />
                </font>

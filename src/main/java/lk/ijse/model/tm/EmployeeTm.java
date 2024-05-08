@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class EmployeeTm {
-    private  String employeeId;
-    private  String employeeName;
+    private  String id;
+    private  String name;
 
-    private  String employeeEmail;
-    private  String employeeContact;
+    private  String email;
+    private  String contact;
 
-    private  String employeeAddress;
-    private  String employeeGender;
+    private  String address;
+    private  String gender;
 }

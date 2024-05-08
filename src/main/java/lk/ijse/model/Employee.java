@@ -9,13 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class Employee {
 
-    private  String id;
-    private  String name;
-
-    private  String email;
-    private  String contact;
-
-    private  String address;
-    private  String gender;
+    private  String employeeId;
+    private  String employeeName;
+    private  String employeeEmail;
+    private  String employeeContact;
+    private  String employeeAddress;
+    private  String employeeGender;
 }
 

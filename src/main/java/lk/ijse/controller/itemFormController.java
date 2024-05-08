@@ -38,6 +38,9 @@ public class itemFormController {
     private TableColumn<?, ?> colInventoryId;
 
     @FXML
+    private TableColumn<?, ?> colQtyOnHand;
+
+    @FXML
     private TableColumn<?, ?> colItemId;
 
     @FXML
@@ -62,6 +65,8 @@ public class itemFormController {
 
     @FXML
     private TextField txtPrice;
+    @FXML
+    private TextField txtQtyOnHand;
     
     public void initialize(){
         setCellValueFactory();
@@ -106,6 +111,7 @@ public class itemFormController {
                         item.getColor(),
                         item.getSize(),
                         item.getPrice(),
+                        item.getQtyOnHand(),
                         item.getInventoryId()
                 );
                 obList.add(tm);
@@ -122,6 +128,7 @@ public class itemFormController {
         colColor.setCellValueFactory(new PropertyValueFactory<>("color"));
         colSize.setCellValueFactory(new PropertyValueFactory<>("size"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
         colInventoryId.setCellValueFactory(new PropertyValueFactory<>("inventoryId"));
     }
 
@@ -132,9 +139,10 @@ public class itemFormController {
         String color = txtColor.getText();
         String size = (String) cmbSize.getValue();
         String price = txtPrice.getText();
+        String qtyOnHand = txtPrice.getText();
         String inventoryId = (String) cmbInventoryId.getValue();
 
-        Item item = new Item(itemid,description,color,size,price,inventoryId);
+        Item item = new Item(itemid,description,color,size,price,qtyOnHand,inventoryId);
         
         
         try {
@@ -154,7 +162,10 @@ public class itemFormController {
         txtItemId.setText("");
         txtDescription.setText("");
         txtColor.setText("");
+        cmbSize.setValue("");
         txtPrice.setText("");
+        txtQtyOnHand.setText("");
+        cmbInventoryId.setValue("");
     }
 
     @FXML
@@ -196,10 +207,11 @@ public class itemFormController {
         String color= txtColor.getText();
         String price= txtPrice.getText();
         String size = (String) cmbSize.getValue();
+        String qtyOnHand = txtQtyOnHand.getText();
         String inventoryId = (String) cmbInventoryId.getValue();
 
 
-        Item item = new Item(itemId,description,color,size,price,inventoryId);
+        Item item = new Item(itemId,description,color,size,price,qtyOnHand,inventoryId);
 
         try {
             boolean Update = ItemRepo.update(item);

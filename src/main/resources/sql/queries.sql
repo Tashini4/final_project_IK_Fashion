@@ -17,8 +17,7 @@ create table payments(
 
 create table orders(
                        orderId VARCHAR(5) PRIMARY KEY,
-                       orderDescription VARCHAR(30),
-                       orderDate DATE,
+                       OrderDate DATE,
                        customerID VARCHAR(5),
                        paymentID VARCHAR(5),
                        foreign key (customerId) references customers(customerId)on DELETE cascade on UPDATE cascade,
@@ -69,7 +68,7 @@ create table items(
                       price DECIMAL(6,3),
                       size VARCHAR(6),
                       color VARCHAR(30),
-                      category VARCHAR(25),
+                      qtyOnHand VARCHAR(30),
                       inventoryId VARCHAR(5),
                       foreign key (inventoryId) references inventory(inventoryId)on UPDATE cascade on DELETE cascade
 );

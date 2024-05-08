@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class task {
-    private String taskId;
-    private String taskDescription;
+public class OrderItem {
+    private String itemId;
+    private String orderId;
+    private int qty;
+    private int unitPrice;
+    private int total;
 }

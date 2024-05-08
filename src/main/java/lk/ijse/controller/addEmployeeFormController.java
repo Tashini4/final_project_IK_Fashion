@@ -90,12 +90,12 @@ public class addEmployeeFormController {
             List<Employee> employeeList = EmployeeRepo.getAll();
             for (Employee employee : employeeList) {
                 EmployeeTm tm = new EmployeeTm(
-                        employee.getId(),
-                        employee.getName(),
-                        employee.getEmail(),
-                        employee.getContact(),
-                        employee.getAddress(),
-                        employee.getGender()
+                        employee.getEmployeeId(),
+                        employee.getEmployeeName(),
+                        employee.getEmployeeEmail(),
+                        employee.getEmployeeContact(),
+                        employee.getEmployeeAddress(),
+                        employee.getEmployeeGender()
                 );
 
                 obList.add(tm);

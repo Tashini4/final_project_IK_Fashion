@@ -11,132 +11,136 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootNode" prefHeight="900.0" prefWidth="1500.0" style="-fx-background-color: #B33771;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.OrderFormController">
+<AnchorPane fx:id="rootNode" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.OrderFormController">
    <children>
-      <Label layoutX="625.0" layoutY="26.0" text="Place Order">
+      <Label layoutX="730.0" layoutY="7.0" text="Place Order">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <Label layoutX="1123.0" layoutY="88.0" text="Order Date :">
+      <TableView fx:id="tblPlaceOrder" layoutX="102.0" layoutY="359.0" prefHeight="425.0" prefWidth="981.0">
+        <columns>
+          <TableColumn fx:id="colItemId" prefWidth="167.27337646484375" text="Item Id" />
+          <TableColumn fx:id="colDescription" prefWidth="192.7279052734375" text="Description" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="161.8187255859375" text="Unit Price" />
+            <TableColumn fx:id="colQty" prefWidth="127.2733154296875" text="Qty" />
+            <TableColumn fx:id="colTotal" prefWidth="162.7279052734375" text="Total" />
+            <TableColumn fx:id="colAction" prefWidth="178.1824951171875" text="Action" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnBack" layoutX="98.0" layoutY="803.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="45.0" prefWidth="107.0" style="-fx-background-color: #6D214F;" text="Home">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnAddToCart" layoutX="476.0" layoutY="803.0" mnemonicParsing="false" onAction="#btnAddToCartOnAction" prefHeight="45.0" prefWidth="160.0" style="-fx-background-color: #2C3A47;" text="AddToCart" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnPlaceOrder" layoutX="271.0" layoutY="803.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" prefHeight="45.0" prefWidth="160.0" style="-fx-background-color: #3B3B98;" text="Place Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <AnchorPane fx:id="root" layoutX="1105.0" layoutY="528.0" prefHeight="305.0" prefWidth="438.0">
+         <children>
+            <Label layoutX="90.0" layoutY="98.0" text="Payment Date :">
+               <font>
+                  <Font name="Abyssinica SIL" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPaymentDate" layoutX="240.0" layoutY="95.0" prefHeight="35.0" prefWidth="175.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="133.0" layoutY="45.0" prefHeight="33.0" prefWidth="160.0" text="Payment ">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="1224.0" layoutY="680.0" text="Payment Id :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="77.0" layoutY="143.0" text="Order Id :">
+      <Label fx:id="lblPaymentId" layoutX="1351.0" layoutY="676.0" prefHeight="35.0" prefWidth="175.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1177.0" layoutY="740.0" text="Payment Amount :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblOrderDate" layoutX="1247.0" layoutY="80.0" prefHeight="44.0" prefWidth="225.0" />
-      <Label fx:id="lblOrderId" layoutX="171.0" layoutY="135.0" prefHeight="44.0" prefWidth="225.0" />
-      <Label layoutX="517.0" layoutY="143.0" text="Customer Id :">
+      <Label fx:id="lblPaymentAmount" layoutX="1357.0" layoutY="736.0" prefHeight="35.0" prefWidth="175.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1320.0" layoutY="60.0" text="Order Date :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbCustomerId" layoutX="652.0" layoutY="138.0" onAction="#cmbCustomerIdOnAction" prefHeight="37.0" prefWidth="195.0" />
-      <Button layoutX="917.0" layoutY="138.0" mnemonicParsing="false" onAction="#btnNewOnAction" prefHeight="37.0" prefWidth="100.0" text="NEW" />
-      <ImageView fitHeight="22.0" fitWidth="20.0" layoutX="925.0" layoutY="146.0">
+      <Label fx:id="lblOrderDate" layoutX="1452.0" layoutY="56.0" prefHeight="37.0" prefWidth="225.0" />
+      <Label layoutX="44.0" layoutY="106.0" text="Order Id :">
+         <font>
+            <Font name="Abyssinica SIL" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblOrderId" layoutX="146.0" layoutY="103.0" prefHeight="35.0" prefWidth="206.0" />
+      <Label layoutX="493.0" layoutY="104.0" text="Customer Id :">
+         <font>
+            <Font name="Abyssinica SIL" size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbCustomerId" layoutX="627.0" layoutY="104.0" onAction="#cmbCustomerIdOnAction" prefHeight="37.0" prefWidth="195.0" />
+      <Button fx:id="btnNewCustomer" layoutX="841.0" layoutY="104.0" mnemonicParsing="false" onAction="#btnNewOnAction" prefHeight="37.0" prefWidth="82.0" style="-fx-background-color: #00b894;" text="NEW" />
+      <ImageView fitHeight="22.0" fitWidth="20.0" layoutX="848.0" layoutY="112.0">
          <image>
             <Image url="@../icon/icons8-add-30.png" />
          </image>
       </ImageView>
-      <Label layoutX="1088.0" layoutY="143.0" text="Customer Name :">
+      <Label layoutX="1043.0" layoutY="112.0" text="Customer Name :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblCustomerName" layoutX="1260.0" layoutY="138.0" prefHeight="37.0" prefWidth="206.0" />
-      <Label layoutX="77.0" layoutY="219.0" text="Item Id :">
+      <Label fx:id="lblCustomerName" layoutX="1211.0" layoutY="112.0" prefHeight="37.0" prefWidth="206.0" />
+      <Label layoutX="61.0" layoutY="182.0" text="Item Id :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbItemId" layoutX="171.0" layoutY="214.0" prefHeight="37.0" prefWidth="195.0" />
-      <Label layoutX="517.0" layoutY="218.0" text="Description :">
+      <ComboBox fx:id="cmbItemId" layoutX="152.0" layoutY="177.0" onAction="#cmbItemIdOnAction" prefHeight="37.0" prefWidth="195.0" />
+      <Label layoutX="510.0" layoutY="182.0" text="Description :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescription" layoutX="644.0" layoutY="210.0" prefHeight="44.0" prefWidth="225.0" />
-      <Label layoutX="959.0" layoutY="219.0" text="QtyOnHand :">
+      <Label fx:id="lblDescription" layoutX="632.0" layoutY="174.0" prefHeight="44.0" prefWidth="225.0" />
+      <Label layoutX="65.0" layoutY="267.0" text="QtyOnHand :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblQtyOnHand" layoutX="1088.0" layoutY="210.0" prefHeight="44.0" prefWidth="225.0" />
-      <Label layoutX="77.0" layoutY="294.0" text="Qty :">
+      <Label fx:id="lblQtyOnHand" layoutX="191.0" layoutY="263.0" prefHeight="35.0" prefWidth="160.0" />
+      <Label layoutX="532.0" layoutY="267.0" text="Unit Price :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtQty" layoutX="133.0" layoutY="294.0" prefHeight="37.0" prefWidth="75.0" />
-      <Label layoutX="410.0" layoutY="294.0" text="Unit Price :">
+      <Label fx:id="lblUnitPrice" layoutX="641.0" layoutY="263.0" prefHeight="35.0" prefWidth="206.0" />
+      <Label layoutX="1067.0" layoutY="266.0" text="Qty :">
          <font>
             <Font name="Abyssinica SIL" size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="tblPlaceOrder" layoutX="24.0" layoutY="390.0" prefHeight="394.0" prefWidth="1095.0">
-        <columns>
-          <TableColumn fx:id="colItemId" prefWidth="138.18231010437012" text="Item Id" />
-          <TableColumn fx:id="colDescription" prefWidth="183.6370391845703" text="Description" />
-            <TableColumn fx:id="colUnitPrice" prefWidth="180.90972900390625" text="Unit Price" />
-            <TableColumn fx:id="colQty" prefWidth="173.636962890625" text="Qty" />
-            <TableColumn fx:id="colTotal" prefWidth="204.546142578125" text="Total" />
-            <TableColumn fx:id="colAction" prefWidth="216.364501953125" text="Action" />
-        </columns>
-      </TableView>
-      <Button layoutX="1212.0" layoutY="454.0" mnemonicParsing="false" onAction="#btnHomeOnAction" prefHeight="45.0" prefWidth="107.0" text="Home">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="1212.0" layoutY="531.0" mnemonicParsing="false" onAction="#btnAddToCartOnAction" prefHeight="45.0" prefWidth="160.0" text="AddToCart">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="1212.0" layoutY="615.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" prefHeight="45.0" prefWidth="160.0" text="Place Order">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Label layoutX="669.0" layoutY="820.0" prefHeight="33.0" prefWidth="160.0" text="Payment ">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="58.0" layoutY="862.0" text="Payment Id :">
-         <font>
-            <Font name="Abyssinica SIL" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblPaymentId" layoutX="181.0" layoutY="858.0" prefHeight="35.0" prefWidth="175.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="508.0" layoutY="862.0" text="Payment Amount :">
-         <font>
-            <Font name="Abyssinica SIL" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblPaymentAmount" layoutX="687.0" layoutY="858.0" prefHeight="35.0" prefWidth="175.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="1009.0" layoutY="860.0" text="Payment Date :">
-         <font>
-            <Font name="Abyssinica SIL" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblPaymentDate" layoutX="1160.0" layoutY="856.0" prefHeight="35.0" prefWidth="175.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblUnitPrice" layoutX="530.0" layoutY="290.0" prefHeight="44.0" prefWidth="225.0" />
+      <TextField fx:id="txtQty" layoutX="1125.0" layoutY="263.0" prefHeight="35.0" prefWidth="54.0" />
    </children>
 </AnchorPane>

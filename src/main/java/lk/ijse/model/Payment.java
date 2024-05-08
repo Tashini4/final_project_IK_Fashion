@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class task {
-    private String taskId;
-    private String taskDescription;
+
+public class Payment {
+    private String paymentId;
+    private int paymentAmount;
+    private Date paymentDate;
 }

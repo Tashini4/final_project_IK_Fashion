@@ -17,7 +17,7 @@ public class CustomerRepo {
         PreparedStatement pvsm = DbConnection.getInstance().getConnection().prepareStatement(sql);
         ResultSet resultSet = pvsm.executeQuery();
 
-        List<Customer> cuslist = new ArrayList<>();
+        List<Customer> customerlist = new ArrayList<>();
 
         while(resultSet.next()){
             String id = resultSet.getString(1);
@@ -27,9 +27,9 @@ public class CustomerRepo {
             String address = resultSet.getString(5);
 
             Customer customer = new Customer(id,name,email,contact,address);
-            cuslist.add(customer);
+            customerlist.add(customer);
         }
-        return cuslist;
+        return customerlist;
     }
 
     public static boolean update(Customer customer) throws SQLException {
@@ -50,19 +50,19 @@ public class CustomerRepo {
         String sql = "SELECT * FROM customers WHERE customerId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, id);
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, id);
 
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = pvsm.executeQuery();
         if (resultSet.next()) {
-            String cus_id = resultSet.getString(1);
+            String customerId = resultSet.getString(1);
             String name = resultSet.getString(2);
             String email= resultSet.getString(3);
             String contact = resultSet.getString(4);
             String address = resultSet.getString(5);
 
 
-            Customer customer = new Customer(cus_id, name,email,contact,address);
+            Customer customer = new Customer(customerId, name,email,contact,address);
 
             return customer;
         }
@@ -74,22 +74,38 @@ public class CustomerRepo {
         String sql = "DELETE FROM customers WHERE customerId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, id);
+        PreparedStatement psvm = connection.prepareStatement(sql);
+        psvm.setObject(1, id);
 
-        return pstm.executeUpdate() > 0;
+        return psvm.executeUpdate() > 0;
+    }
+
+    public static List<String> getIds() throws SQLException {
+        String sql = "SELECT customerId FROM customers";
+        PreparedStatement pvsm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
+
+        List<String> idList = new ArrayList<>();
+
+        ResultSet resultSet = pvsm.executeQuery();
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            idList.add(id);
+        }
+        return idList;
     }
 
 
+
     public int getCustomer() throws SQLException {
-        String sql = "SELECT COUNT(*) AS customerCount FROM customers";
+        String sql = "SELECT COUNT(*) AS customer_count FROM customers";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
         ResultSet resultSet = pvsm.executeQuery();
 
         if (resultSet.next()) {
-            return resultSet.getInt("customerCount");
+            return resultSet.getInt("customer_count");
         }
         return 0;
     }

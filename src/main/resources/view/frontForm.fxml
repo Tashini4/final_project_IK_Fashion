@@ -19,12 +19,13 @@
             </ImageView>
          </children>
       </AnchorPane>
+      <AnchorPane layoutX="879.0" prefHeight="700.0" prefWidth="342.0" style="-fx-background-color: black;" />
       <Label layoutX="915.0" layoutY="179.0" text="Welcome" textFill="#e00233">
          <font>
             <Font name="System Bold" size="54.0" />
          </font>
       </Label>
-      <Label layoutX="990.0" layoutY="253.0" text="Ik Fashion">
+      <Label layoutX="990.0" layoutY="253.0" text="Ik Fashion" textFill="WHITE">
          <font>
             <Font name="Abyssinica SIL" size="24.0" />
          </font>

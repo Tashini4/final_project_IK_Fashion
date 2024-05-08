@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -19,7 +20,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="20.0" layoutY="96.0" prefHeight="575.0" prefWidth="366.0">
+      <AnchorPane layoutX="20.0" layoutY="96.0" prefHeight="575.0" prefWidth="366.0" style="-fx-background-color: #ced6e0;">
          <children>
             <Label layoutX="8.0" layoutY="45.0" text="EmployeeID :">
                <font>
@@ -65,6 +66,9 @@
                </font>
             </Button>
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </AnchorPane>
       <AnchorPane layoutX="405.0" layoutY="98.0" prefHeight="575.0" prefWidth="595.0">
          <children>
@@ -75,6 +79,9 @@
                   <TableColumn fx:id="colDate" prefWidth="127.27313232421875" text="Date" />
                   <TableColumn fx:id="colAmount" prefWidth="155.4552001953125" text="Amount $" />
               </columns>
+               <effect>
+                  <DropShadow />
+               </effect>
             </TableView>
          </children>
       </AnchorPane>

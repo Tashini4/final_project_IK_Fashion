@@ -62,9 +62,21 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbGender" layoutX="698.0" layoutY="411.0" onAction="#cmbGenderOnAction" prefHeight="35.0" prefWidth="206.0" />
-      <Button layoutX="539.0" layoutY="501.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="45.0" prefWidth="113.0" text="Save" />
-      <Button layoutX="687.0" layoutY="501.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="45.0" prefWidth="113.0" text="Delete" />
-      <Button layoutX="825.0" layoutY="501.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="45.0" prefWidth="113.0" text="Update" />
-      <Button layoutX="724.0" layoutY="577.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="45.0" prefWidth="113.0" text="clear" />
+      <Button layoutX="539.0" layoutY="501.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #006266;" text="Save" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button layoutX="687.0" layoutY="501.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #EA2027;" text="Delete" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button layoutX="825.0" layoutY="501.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #6F1E51;" text="Update" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button layoutX="724.0" layoutY="577.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #5758BB;" text="clear" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

@@ -57,17 +57,17 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <Button layoutX="44.0" layoutY="382.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="49.0" prefWidth="98.0" text="Save">
+      <Button layoutX="44.0" layoutY="382.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="49.0" prefWidth="98.0" style="-fx-background-color: #cc8e35;" text="Save">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="152.0" layoutY="382.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="49.0" prefWidth="98.0" text="Update">
+      <Button layoutX="152.0" layoutY="382.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="49.0" prefWidth="98.0" style="-fx-background-color: #474787;" text="Update" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="267.0" layoutY="382.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="49.0" prefWidth="98.0" text="Delete">
+      <Button layoutX="267.0" layoutY="382.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="49.0" prefWidth="98.0" style="-fx-background-color: #d63031;" text="Delete">
          <font>
             <Font size="18.0" />
          </font>
@@ -80,7 +80,7 @@
             <TableColumn fx:id="colPassword" prefWidth="182.72784423828125" text="Password" />
         </columns>
       </TableView>
-      <Button layoutX="20.0" layoutY="683.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="49.0" prefWidth="98.0" text="Clear">
+      <Button layoutX="20.0" layoutY="683.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="49.0" prefWidth="98.0" style="-fx-background-color: #34ace0;" text="Clear">
          <font>
             <Font size="20.0" />
          </font>

@@ -1,4 +1,3 @@
-
 package lk.ijse.controller;
 
 import javafx.collections.FXCollections;
@@ -40,7 +39,8 @@ public class CustomerFormController {
     private TableColumn<?, ?> colName;
 
     @FXML
-    private AnchorPane rootNode;
+    private AnchorPane root;
+
     @FXML
     private TableView<CustomerTm> tblCustomer;
 
@@ -59,10 +59,31 @@ public class CustomerFormController {
     @FXML
     private TextField txtName;
 
-
     public void initialize() {
         setCellValueFactory();
-        loadAllCustomers();
+        loadAllCustomer();
+        ;
+    }
+
+    private void loadAllCustomer() {
+        ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
+
+        try {
+            List<Customer> customerList = CustomerRepo.getAll();
+            for (Customer customer : customerList) {
+                CustomerTm tm = new CustomerTm(
+                        customer.getCustomerId(),
+                        customer.getCustomerName(),
+                        customer.getCustomerEmail(),
+                        customer.getCustomerContact(),
+                        customer.getCustomerAddress()
+                );
+                obList.add(tm);
+            }
+            tblCustomer.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
     }
 
     private void setCellValueFactory() {
@@ -73,58 +94,19 @@ public class CustomerFormController {
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
     }
 
-    private void loadAllCustomers() {
-        ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
-
-        try {
-            List<Customer> customerList = CustomerRepo.getAll();
-            for (Customer customer : customerList) {
-                CustomerTm tm = new CustomerTm(
-                        customer.getId(),
-                        customer.getName(),
-                        customer.getEmail(),
-                        customer.getContact(),
-                        customer.getAddress()
-
-                );
-
-                obList.add(tm);
-            }
-
-            tblCustomer.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
     @FXML
-
-    void btnSaveOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String email = txtEmail.getText();
-        String contact = txtContact.getText();
-        String address = txtAddress.getText();
-
-        Customer customer = new Customer(id, name, email , contact ,address);
-
-        try {
-            boolean Save= CustomerRepo.save(customer);
-            if (Save) {
-                new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
-                loadAllCustomers();
-                clearFields();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    void btnBackOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("Dashboard Form");
+        stage.centerOnScreen();
     }
+
     @FXML
     void btnClearOnAction(ActionEvent event) {
-
         clearFields();
+
     }
 
     private void clearFields() {
@@ -135,73 +117,78 @@ public class CustomerFormController {
         txtAddress.setText("");
     }
 
-
-    @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String email= txtEmail.getText();
-        String contact = txtContact.getText();
-        String address = txtAddress.getText();
-
-
-        Customer customer = new Customer(id, name,email,contact,address);
-
-        try {
-            boolean Update = CustomerRepo.update(customer);
-            if(Update) {
-                new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-    }
-
-    void btnSearchOnAction(ActionEvent event) throws SQLException {
-        String id = txtId.getText();
-
-        Customer customer = CustomerRepo.searchById(id);
-        if (customer != null) {
-            txtId.setText(customer.getId());
-            txtName.setText(customer.getName());
-            txtEmail.setText(customer.getEmail());
-            txtContact.setText(customer.getContact());
-            txtAddress.setText(customer.getAddress());
-
-        } else {
-            new Alert(Alert.AlertType.INFORMATION, "customer not found!").show();
-        }
-    }
-
-
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String id = txtId.getText();
 
         try {
-            boolean Delete = CustomerRepo.delete(id);
-            if(Delete) {
+            boolean isDeleted = CustomerRepo.delete(id);
+            if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer deleted!").show();
-                loadAllCustomers();
-                clearFields();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
-    @FXML
-    void btnBackOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
-        Stage stage = (Stage) rootNode.getScene().getWindow();
 
-        stage.setScene(new Scene(anchorPane));
-        stage.setTitle("Dashboard Form");
-        stage.centerOnScreen();
+    @FXML
+    void btnSaveOnAction(ActionEvent event) {
+        String id = txtId.getText();
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String contact = txtContact.getText();
+        String address = txtAddress.getText();
+
+        Customer customer = new Customer(id, name, email, contact, address);
+
+        try {
+            boolean isSaved = CustomerRepo.save(customer);
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
+                clearFields();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @FXML
+    void btnUpdateOnAction(ActionEvent event) {
+        String id = txtId.getText();
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String contact = txtContact.getText();
+        String address = txtAddress.getText();
+
+        Customer customer = new Customer(id, name, email, contact, address);
+
+        try {
+            boolean isUpdated = CustomerRepo.update(customer);
+            if (isUpdated) {
+                new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
+    }
+
+
+
+    @FXML
+    void txtSearchOnAction(ActionEvent event) throws SQLException {
+        String id = txtId.getText();
+
+        Customer customer = CustomerRepo.searchById(id);
+        if (customer != null) {
+            txtId.setText(customer.getCustomerId());
+            txtName.setText(customer.getCustomerName());
+            txtEmail.setText(customer.getCustomerEmail());
+            txtContact.setText(customer.getCustomerContact());
+            txtAddress.setText(customer.getCustomerAddress());
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "customer not found!").show();
+        }
+
+    }
 }
-
-
-
-
-

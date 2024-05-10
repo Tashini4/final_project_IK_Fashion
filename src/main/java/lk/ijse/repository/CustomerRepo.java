@@ -33,15 +33,15 @@ public class CustomerRepo {
     }
 
     public static boolean update(Customer customer) throws SQLException {
-        String sql = "UPDATE customers SET customerName = ?, customerAddress = ?, customerContact = ? , customerEmail = ? WHERE customerId = ?";
+        String sql = "UPDATE customers SET customerName = ?, customerEmail = ?, customerContact = ? , customerAddress = ? WHERE customerId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
-        pvsm.setObject(1, customer.getName());
-        pvsm.setObject(2, customer.getAddress());
-        pvsm.setObject(3, customer.getContact());
-        pvsm.setObject(4, customer.getEmail());
-        pvsm.setObject(5, customer.getId());
+        pvsm.setObject(1, customer.getCustomerName());
+        pvsm.setObject(2, customer.getCustomerEmail());
+        pvsm.setObject(3, customer.getCustomerContact());
+        pvsm.setObject(4, customer.getCustomerAddress());
+        pvsm.setObject(5, customer.getCustomerId());
 
         return pvsm.executeUpdate() > 0;
     }
@@ -55,14 +55,14 @@ public class CustomerRepo {
 
         ResultSet resultSet = pvsm.executeQuery();
         if (resultSet.next()) {
-            String customerId = resultSet.getString(1);
+            String cus_id = resultSet.getString(1);
             String name = resultSet.getString(2);
             String email= resultSet.getString(3);
             String contact = resultSet.getString(4);
             String address = resultSet.getString(5);
 
 
-            Customer customer = new Customer(customerId, name,email,contact,address);
+            Customer customer = new Customer(cus_id, name,email,contact,address);
 
             return customer;
         }
@@ -114,11 +114,11 @@ public class CustomerRepo {
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
-        pvsm.setObject(1, customer.getId());
-        pvsm.setObject(2, customer.getName());
-        pvsm.setObject(3, customer.getEmail());
-        pvsm.setObject(4, customer.getContact());
-        pvsm.setObject(5, customer.getAddress());
+        pvsm.setObject(1, customer.getCustomerId());
+        pvsm.setObject(2, customer.getCustomerName());
+        pvsm.setObject(3, customer.getCustomerEmail());
+        pvsm.setObject(4, customer.getCustomerContact());
+        pvsm.setObject(5, customer.getCustomerAddress());
 
 
         return pvsm.executeUpdate() > 0;

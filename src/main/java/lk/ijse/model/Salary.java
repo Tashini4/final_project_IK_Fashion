@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Salary {
     private  String employeeId;
     private String salaryId;
-    private String date;
-    private String amount;
+    private String salaryDate;
+    private String salaryAmount;
 
 }

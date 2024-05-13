@@ -61,7 +61,7 @@ public class DashBoardFormController {
             salesCount = getSalesCount();
             itemCount = getItemCount();
             userCount = getUserCount();
-            employeeCount = getEmployeeCouunt();
+            employeeCount = getEmployeeCount();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -78,7 +78,7 @@ public class DashBoardFormController {
         lblEmployeeCount.setText(String.valueOf(employeeCount));
     }
 
-    private int getEmployeeCouunt() throws SQLException {
+    private int getEmployeeCount() throws SQLException {
         String sql = "SELECT COUNT(*) AS employee_count FROM employees";
 
         Connection connection = DbConnection.getInstance().getConnection();
@@ -137,7 +137,7 @@ public class DashBoardFormController {
         ResultSet resultSet = pvsm.executeQuery();
 
         if(resultSet.next()){
-            return resultSet.getInt("order_count");
+            return resultSet.getInt("sales_count");
         }
         return 0;
     }

@@ -1,11 +1,13 @@
 package lk.ijse.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.model.User.User;
@@ -17,6 +19,8 @@ import java.sql.SQLException;
 
 public class loginFormController {
     @FXML
+    private JFXButton btnLogin;
+    @FXML
     private AnchorPane rootNode;
 
     @FXML
@@ -24,6 +28,20 @@ public class loginFormController {
 
     @FXML
     private TextField txtUserName;
+
+    public void initialize(){
+        txtUserName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                txtPassword.requestFocus();
+            }
+        });
+        txtPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                btnLogin.requestFocus();
+            }
+        });
+    }
+
 
     @FXML
     void btnLoginOnAction(ActionEvent event) throws IOException {

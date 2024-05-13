@@ -13,7 +13,7 @@
 
 <!--<AnchorPane fx:id="rootNode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">-->
 
-<AnchorPane fx:id="rootNode" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.EmployeeSalaryFormController">
+<AnchorPane fx:id="root" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.EmployeeSalaryFormController">
    <children>
       <Label layoutX="305.0" layoutY="32.0" prefHeight="40.0" prefWidth="449.0" text="Employee Salary Manage System" textFill="#070707">
          <font>
@@ -32,7 +32,7 @@
                   <Font name="Abyssinica SIL" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="txtSalaryId" layoutX="137.0" layoutY="92.0" prefHeight="28.0" prefWidth="205.0">
+            <TextField fx:id="txtSalaryId" layoutX="137.0" layoutY="92.0" onAction="#txtSearchOnAction" prefHeight="28.0" prefWidth="205.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

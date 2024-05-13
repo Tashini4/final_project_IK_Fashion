@@ -62,7 +62,7 @@ public class CustomerFormController {
     public void initialize() {
         setCellValueFactory();
         loadAllCustomer();
-        ;
+
     }
 
     private void loadAllCustomer() {

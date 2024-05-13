@@ -25,25 +25,25 @@ public class ItemRepo {
         while(resultSet.next()){
             String itemId = resultSet.getString(1);
             String description = resultSet.getString(2);
-            String color = resultSet.getString(3);
+            String brand = resultSet.getString(3);
             String size = resultSet.getString(4);
-            String price = resultSet.getString(5);
-            String qtyOnHand = resultSet.getString(6);
+            double price = Double.parseDouble(resultSet.getString(5));
+            int qtyOnHand = Integer.parseInt(resultSet.getString(6));
             String inventoryId = resultSet.getString(7);
 
-            Item item = new Item(itemId,description,color,size,price,qtyOnHand,inventoryId);
+            Item item = new Item(itemId,description,brand,size,price,qtyOnHand,inventoryId);
             itemlist.add(item);
         }
         return itemlist;
     }
     public static boolean add(Item item) throws SQLException {
-        String sql = "INSERT INTO items VALUES(?, ?, ?, ? , ?, ?)";
+        String sql = "INSERT INTO items VALUES(?, ?, ?, ? , ?, ? ,?)";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
         pvsm.setObject(1, item.getItemId());
         pvsm.setObject(2, item.getDescription());
-        pvsm.setObject(3, item.getColor());
+        pvsm.setObject(3, item.getBrand());
         pvsm.setObject(4, item.getSize());
         pvsm.setObject(5, item.getPrice());
         pvsm.setObject(6, item.getQtyOnHand());
@@ -63,13 +63,13 @@ public class ItemRepo {
     }
 
     public static boolean update(Item item) throws SQLException {
-        String sql = "UPDATE items SET itemDescription = ?, color = ? , size = ? , price = ?, qtyOnHand = ?, inventoryId = ? WHERE itemId = ?";
+        String sql = "UPDATE items SET description = ?, brand = ? , size = ? , price = ?, qtyOnHand = ?, inventoryId = ? WHERE itemId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
         pvsm.setObject(1, item.getItemId());
         pvsm.setObject(2, item.getDescription());
-        pvsm.setObject(3, item.getColor());
+        pvsm.setObject(3, item.getBrand());
         pvsm.setObject(4, item.getSize());
         pvsm.setObject(5, item.getPrice());
         pvsm.setObject(6, item.getQtyOnHand());
@@ -94,6 +94,7 @@ public class ItemRepo {
 
     public static Item searchById(String id) throws SQLException {
         String sql = "SELECT * FROM items WHERE itemId = ?";
+
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
         pvsm.setString(1, id);
@@ -101,14 +102,14 @@ public class ItemRepo {
 
         if (resultSet.next()) {
             String itemId = resultSet.getString("itemId");
-            String description = resultSet.getString("Description");
-            String color = resultSet.getString("color");
+            String description = resultSet.getString("description");
+            String brand = resultSet.getString("brand");
             String size = resultSet.getString("size");
-            String price = resultSet.getString("price");
-            String qtyOnHand = resultSet.getString("qtyOnHand");
+            double price = Double.parseDouble(resultSet.getString("price"));
+            int qtyOnHand = Integer.parseInt(resultSet.getString("qtyOnHand"));
             String inventoryId = resultSet.getString("inventoryId");
 
-            Item item = new Item(itemId,description,color,size,price,qtyOnHand,inventoryId);
+            Item item = new Item(itemId,description,brand,size,price,qtyOnHand,inventoryId);
 
             return item;
         }

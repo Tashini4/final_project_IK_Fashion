@@ -3,6 +3,7 @@ package lk.ijse.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Label;
@@ -34,25 +35,19 @@ public class StockFormController {
     @FXML
     private AnchorPane rootNode;
 
+
+
     @FXML
     void btnAddItemOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/itemForm.fxml"));
-        Stage stage = (Stage) rootNode.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-        stage.setTitle("Item Form");
-        stage.centerOnScreen();
+        rootNode.getChildren().setAll(anchorPane);;
 
     }
 
     @FXML
     void btnAddSupplierOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/addSupplierForm.fxml"));
-        Stage stage = (Stage) rootNode.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-        stage.setTitle("Supplier Form");
-        stage.centerOnScreen();
+        rootNode.getChildren().setAll(anchorPane);
     }
     @FXML
     void btnExitOnAction(ActionEvent event) throws IOException {

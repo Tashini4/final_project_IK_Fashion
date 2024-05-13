@@ -1,6 +1,7 @@
 package lk.ijse.repository;
 
 import lk.ijse.db.DbConnection;
+
 import lk.ijse.model.Salary;
 
 import java.sql.Connection;
@@ -39,8 +40,8 @@ public class SalaryRepo {
         PreparedStatement pvsm= connection.prepareStatement(sql);
 
         pvsm.setObject(1, salary.getEmployeeId());
-        pvsm.setObject(2, salary.getDate());
-        pvsm.setObject(3, salary.getAmount());
+        pvsm.setObject(2, salary.getSalaryDate());
+        pvsm.setObject(3, salary.getSalaryAmount());
         pvsm.setObject(4, salary.getSalaryId());
 
         return pvsm.executeUpdate() > 0;
@@ -53,15 +54,40 @@ public class SalaryRepo {
         PreparedStatement pvsm = connection.prepareStatement(sql);
         pvsm.setObject(1, salary.getEmployeeId());
         pvsm.setObject(2, salary.getSalaryId());
-        pvsm.setObject(3, salary.getDate());
-        pvsm.setObject(4, salary.getAmount());
+        pvsm.setObject(3, salary.getSalaryDate());
+        pvsm.setObject(4, salary.getSalaryAmount());
 
 
 
         return pvsm.executeUpdate() > 0;
     }
 
+    public static Salary searchById(String id) throws SQLException {
+        String sql = "SELECT * FROM salary WHERE salaryId = ?";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pvsm = connection.prepareStatement(sql);
+        pvsm.setObject(1, id);
+
+        ResultSet resultSet = pvsm.executeQuery();
+        if (resultSet.next()) {
+            String employeeId = resultSet.getString(1);
+            String salaryId = resultSet.getString(2);
+            String date = resultSet.getString(3);
+            String amount = resultSet.getString(4);
+
+
+
+            Salary salary = new Salary(employeeId,salaryId,date,amount);
+
+            return salary;
+        }
+
+        return null;
     }
+
+}
+
 
 
 

@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.model.*;
@@ -107,14 +108,47 @@ public class OrderFormController {
 
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
 
-    public void initialize(){
+    public void initialize() {
         getCurrentOrderId();
         setDate();
         getCustomerIds();
         getItemIds();
         setCellValueFactory();
         getCurrentPaymentId();
+
+        addHoverHandlers(btnAddToCart);
+        addHoverHandlers(btnBack);
+        addHoverHandlers(btnPlaceOrder);
+        addHoverHandlers(btnNewCustomer);
+
+        cmbCustomerId.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                cmbItemId.requestFocus();
+            }
+        });
+        cmbItemId.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                txtQty.requestFocus();
+            }
+        });
+        tblPlaceOrder.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                txtQty.requestFocus();
+            }
+        });
     }
+
+
+    private void addHoverHandlers(Button button) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-color: #27f802; -fx-text-fill: white;");
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
+        });
+    }
+
+
 
     private void setDate() {
         LocalDate now = LocalDate.now();
@@ -168,8 +202,14 @@ public class OrderFormController {
             }
             cmbItemId.setItems(obList);
         }catch (SQLException e){
-            throw new RuntimeException();
+            showAlert(Alert.AlertType.ERROR, "Error occurred while fetching Products IDs: " + e.getMessage());
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void setCellValueFactory() {
@@ -229,7 +269,7 @@ public class OrderFormController {
     private void calculateNetTotal() {
         int netTotal = 0;
         for (int i = 0;i<tblPlaceOrder.getItems().size();i++){
-            netTotal += tblPlaceOrder.getCellData(i);
+            netTotal += (int) colTotal.getCellData(i);
         }
         lblPaymentAmount.setText(String.valueOf(netTotal));
     }
@@ -272,14 +312,14 @@ public class OrderFormController {
 
         for (int i = 0; i < tblPlaceOrder.getItems().size(); i++) {
             CartTm tm = obList.get(i);
-            OrderItem or= new OrderItem(
-                    or.getItemId(),
+            OrderItem od= new OrderItem(
+                    tm.getItemId(),
                     orderId,
-                    or.getQty(),
-                    or.getUnitPrice(),
-                    or.getTotal()
+                    tm.getQty(),
+                    tm.getUnitPrice(),
+                    tm.getTotal()
             );
-            odList.add(or);
+            odList.add(od);
         }
         Payment payment = new Payment(paymentId,amount,date);
         PlaceOrder po = new PlaceOrder(order,odList,payment);
@@ -337,7 +377,7 @@ public class OrderFormController {
         try {
             Customer customer = CustomerRepo.searchById(id);
 
-            lblCustomerName.setText(customer.getName());
+            lblCustomerName.setText(customer.getCustomerName());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

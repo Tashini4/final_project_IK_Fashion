@@ -10,10 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.model.Inventory;
+
 import lk.ijse.model.Item;
 import lk.ijse.model.tm.ItemTm;
-import lk.ijse.repository.InventoryRepo;
 import lk.ijse.repository.ItemRepo;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class itemFormController {
     private ComboBox<String> cmbSize;
 
     @FXML
-    private TableColumn<?, ?> colColor;
+    private TableColumn<?, ?> colBrand;
 
     @FXML
     private TableColumn<?, ?> colDescription;
@@ -38,24 +37,25 @@ public class itemFormController {
     private TableColumn<?, ?> colInventoryId;
 
     @FXML
-    private TableColumn<?, ?> colQtyOnHand;
-
-    @FXML
     private TableColumn<?, ?> colItemId;
 
     @FXML
     private TableColumn<?, ?> colPrice;
 
     @FXML
+    private TableColumn<?, ?> colQtyOnHand;
+
+    @FXML
     private TableColumn<?, ?> colSize;
 
     @FXML
-    private TableView<ItemTm> tblItem;
-    @FXML
-    private AnchorPane rootNode;
+    private AnchorPane root;
 
     @FXML
-    private TextField txtColor;
+    private TableView<ItemTm> tblItem;
+
+    @FXML
+    private TextField txtBrand;
 
     @FXML
     private TextField txtDescription;
@@ -65,14 +65,16 @@ public class itemFormController {
 
     @FXML
     private TextField txtPrice;
+
     @FXML
     private TextField txtQtyOnHand;
-    
+
     public void initialize(){
         setCellValueFactory();
-        loadAllItems();
+        loadAllItem();
         getInventoryIds();
         setSize();
+
     }
 
     private void setSize() {
@@ -83,32 +85,39 @@ public class itemFormController {
         size.add("L");
         size.add("XL");
         size.add("XXL");
-        size.add("XXXL");
-
+        size.add("3XL");
+        size.add("4XL");
+        size.add("5XL");
+        size.add("6XL");
 
         cmbSize.setItems(size);
     }
 
     private void getInventoryIds() {
+        ObservableList<String> obList = FXCollections.observableArrayList();
+
         try {
-            List<String> idList = InventoryRepo.getIds();
-            ObservableList<String> obList = FXCollections.observableArrayList(idList);
+            List<String> idList =  ItemRepo.getIds();
+
+            for (String id : idList){
+                obList.add(id);
+            }
             cmbInventoryId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }catch(SQLException e){
+            throw new RuntimeException();
         }
     }
 
-    private void loadAllItems() {
+    private void loadAllItem() {
         ObservableList<ItemTm> obList = FXCollections.observableArrayList();
-        
-        try{
+
+        try {
             List<Item> itemList = ItemRepo.getAll();
             for (Item item : itemList){
                 ItemTm tm = new ItemTm(
                         item.getItemId(),
                         item.getDescription(),
-                        item.getColor(),
+                        item.getBrand(),
                         item.getSize(),
                         item.getPrice(),
                         item.getQtyOnHand(),
@@ -117,15 +126,15 @@ public class itemFormController {
                 obList.add(tm);
             }
             tblItem.setItems(obList);
-        }catch (SQLException e ){
-            throw new RuntimeException(e);
+        }catch (SQLException e){
+            throw new RuntimeException();
         }
     }
 
     private void setCellValueFactory() {
         colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colColor.setCellValueFactory(new PropertyValueFactory<>("color"));
+        colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         colSize.setCellValueFactory(new PropertyValueFactory<>("size"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
@@ -134,34 +143,44 @@ public class itemFormController {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-        String itemid = txtItemId.getText();
+        String itemId = txtItemId.getText();
         String description = txtDescription.getText();
-        String color = txtColor.getText();
+        String brand = txtBrand.getText();
         String size = (String) cmbSize.getValue();
-        String price = txtPrice.getText();
-        String qtyOnHand = txtPrice.getText();
+        double price = Double.parseDouble(txtPrice.getText());
+        int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
         String inventoryId = (String) cmbInventoryId.getValue();
 
-        Item item = new Item(itemid,description,color,size,price,qtyOnHand,inventoryId);
-        
-        
+        Item item = new Item(itemId,description,brand,size,price,qtyOnHand,inventoryId);
+
         try {
-            boolean Add = ItemRepo.add(item);
-            if (Add) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Added item!").show();
-                loadAllItems();
-                clearFields();
+            boolean isAdded = ItemRepo.add(item);
+            if (isAdded){
+                new Alert(Alert.AlertType.CONFIRMATION,"Item added!").show();
             }
         }catch (SQLException e){
-            throw new RuntimeException(e);
-            
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
     }
 
-    private void clearFields() {
+    @FXML
+    void btnBackOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/stockForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("Stock Form");
+        stage.centerOnScreen();
+    }
+
+    @FXML
+    void btnClearOnAction(ActionEvent event) {
+        clearField();
+    }
+
+    private void clearField() {
         txtItemId.setText("");
         txtDescription.setText("");
-        txtColor.setText("");
+        txtBrand.setText("");
         cmbSize.setValue("");
         txtPrice.setText("");
         txtQtyOnHand.setText("");
@@ -169,20 +188,13 @@ public class itemFormController {
     }
 
     @FXML
-    void btnClearOnAction(ActionEvent event) {
-        clearFields();
-    }
-
-    @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String id = txtItemId.getText();
 
         try {
-            boolean Delete = ItemRepo.delete(id);
-            if(Delete) {
+            boolean isDeleted = ItemRepo.delete(id);
+            if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Item deleted!").show();
-                loadAllItems();
-                clearFields();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -190,32 +202,20 @@ public class itemFormController {
     }
 
     @FXML
-    void btnExitOnAction(ActionEvent event) throws IOException {
-        AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/stockForm.fxml"));
-
-        Scene scene = new Scene(rootNode);
-
-        Stage stage = (Stage) this.rootNode.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Stock Form");
-    }
-
-    @FXML
     void btnUpdateOnAction(ActionEvent event) {
         String itemId = txtItemId.getText();
         String description = txtDescription.getText();
-        String color= txtColor.getText();
-        String price= txtPrice.getText();
+        String brand = txtBrand.getText();
         String size = (String) cmbSize.getValue();
-        String qtyOnHand = txtQtyOnHand.getText();
+        double price = Double.parseDouble(txtPrice.getText());
+        int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
         String inventoryId = (String) cmbInventoryId.getValue();
 
-
-        Item item = new Item(itemId,description,color,size,price,qtyOnHand,inventoryId);
+       Item item = new Item(itemId, description,brand,size,price,qtyOnHand,inventoryId);
 
         try {
-            boolean Update = ItemRepo.update(item);
-            if(Update) {
+            boolean isUpdated = ItemRepo.update(item);
+            if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "item updated!").show();
             }
         } catch (SQLException e) {
@@ -225,9 +225,12 @@ public class itemFormController {
 
     @FXML
     void cmbInventoryOnAction(ActionEvent event) {
-        String id = cmbInventoryId.getValue();
+        String inventoryId = cmbInventoryId.getValue();
         try {
-            Inventory inventory = InventoryRepo.searchById(id);
+            Item item = ItemRepo.searchById(inventoryId);
+
+           cmbInventoryId.setValue(item.getInventoryId());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -238,4 +241,24 @@ public class itemFormController {
 
     }
 
+    @FXML
+    void txtSearchOnAction(ActionEvent event) throws SQLException {
+        String itemId = txtItemId.getText();
+
+       Item item = ItemRepo.searchById(itemId);
+        if (item != null) {
+            txtItemId.setText(item.getItemId());
+            txtDescription.setText(item.getDescription());
+            txtBrand.setText(item.getBrand());
+            cmbSize.setValue(item.getSize());
+            txtPrice.setText(String.valueOf(item.getPrice()));
+            txtQtyOnHand.setText(String.valueOf(item.getQtyOnHand()));
+            cmbInventoryId.setValue(item.getInventoryId());
+
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "item not found!").show();
+        }
+    }
 }
+
+

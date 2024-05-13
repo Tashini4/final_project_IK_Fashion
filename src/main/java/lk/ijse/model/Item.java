@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Item {
-    private String inventoryId;
     private String itemId;
     private String description;
-    private String color;
+    private String brand;
     private String size;
-    private String price;
-    private String qtyOnHand;
-
+    private double price;
+    private int qtyOnHand;
+    private String inventoryId;
 }

@@ -5,10 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+
 import lk.ijse.model.Employee;
 import lk.ijse.model.Salary;
 import lk.ijse.model.tm.SalaryTm;
+
 import lk.ijse.repository.EmployeeRepo;
 import lk.ijse.repository.SalaryRepo;
 
@@ -47,13 +50,19 @@ public class EmployeeSalaryFormController {
     @FXML
     private TextField txtSalaryId;
 
-
-    public void initialize() {
-
+    public void initialize(){
+        loadAllEmployee();
+        setCellValueFactory();
         getEmployeeIds();
     }
 
-
+    private void setCellValueFactory() {
+        colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+        colSalaryId.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+    }
 
 
     @FXML
@@ -100,8 +109,8 @@ public class EmployeeSalaryFormController {
                 SalaryTm tm = new SalaryTm(
                         salary.getEmployeeId(),
                         salary.getSalaryId(),
-                        salary.getDate(),
-                        salary.getAmount()
+                        salary.getSalaryDate(),
+                        salary.getSalaryAmount()
                 );
 
                 obList.add(tm);
@@ -110,6 +119,21 @@ public class EmployeeSalaryFormController {
             tblSalary.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    void btnSearchOnAction(ActionEvent event) throws SQLException {
+        String id = txtSalaryId.getText();
+
+        Salary salary = SalaryRepo.searchById(id);
+        if (salary != null) {
+            txtSalaryId.setText(salary.getSalaryId());
+            txtDate.setText(salary.getSalaryDate());
+            txtAmount.setText(salary.getSalaryAmount());
+            cmbEmployeeId.setValue(salary.getEmployeeId());
+
+
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "customer not found!").show();
         }
     }
 

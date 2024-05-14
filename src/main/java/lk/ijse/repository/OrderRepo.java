@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class OrderRepo {
 
     public static String getCurrentId() throws SQLException {
-        String sql = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
+        String sql = "SELECT MAX(CAST(SUBSTRING(orderId, 2) AS UNSIGNED)) AS HighestOrderId FROM orders";
         PreparedStatement pvsm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -41,9 +41,9 @@ public class OrderRepo {
                 .prepareStatement(sql);
 
         pvsm.setString(1, order.getOrderId());
-        pvsm.setString(2, order.getCustomerId());
-        pvsm.setString(3, order.getPaymentId());
-        pvsm.setDate(4, order.getOrderDate());
+        pvsm.setDate(2, order.getOrderDate());
+        pvsm.setString(3, order.getCustomerId());
+        pvsm.setString(4, order.getPaymentId());
 
         return pvsm.executeUpdate() > 0;
     }

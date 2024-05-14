@@ -128,7 +128,7 @@ public class ItemRepo {
     }
 
     private static boolean updateQty(String itemId, int qty) throws SQLException {
-        String sql = "UPDATE items SET qty_on_hand = qty_on_hand - ? WHERE itemId= ?";
+        String sql = "UPDATE items SET qtyOnHand = qtyOnHand - ? WHERE itemId= ?";
 
         PreparedStatement pvsm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);

@@ -185,11 +185,11 @@ public class OrderFormController {
 
     private String generateNextOrderId(String currentId) {
         if (currentId != null){
-            String[] splist = currentId.split("0");
-            int idNum = Integer.parseInt(splist[1]);
-            return "0" + ++idNum;
+           int id = Integer.parseInt(currentId);
+           ++id;
+           return "O"+id;
         }
-        return "0001";
+        return "O1";
     }
 
     private void getCustomerIds() {

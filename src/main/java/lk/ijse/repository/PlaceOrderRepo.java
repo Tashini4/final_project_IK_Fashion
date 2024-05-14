@@ -1,5 +1,6 @@
 package lk.ijse.repository;
 
+import javafx.scene.control.Alert;
 import lk.ijse.db.DbConnection;
 import lk.ijse.model.PlaceOrder;
 
@@ -23,13 +24,14 @@ public class PlaceOrderRepo {
 
                             connection.commit();
                             return true;
-                        }
-                    }
-                }
-            }
+                        } new Alert(Alert.AlertType.ERROR, "orderdetail not update").show();
+                    }new Alert(Alert.AlertType.ERROR, "Item not update").show();
+                }new Alert(Alert.AlertType.ERROR, "order not update").show();
+            } new Alert(Alert.AlertType.ERROR, "Payament not update").show();
             connection.rollback();
             return false;
         } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
             connection.rollback();
             return false;
         } finally {

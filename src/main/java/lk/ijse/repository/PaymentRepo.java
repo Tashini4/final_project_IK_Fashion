@@ -28,11 +28,11 @@ public class PaymentRepo {
         ResultSet resultSet = pvsm.executeQuery();
         if (resultSet.next()){
             String paymentId = resultSet.getString(1);
-            int Amount = Integer.parseInt(resultSet.getString(2));
+            double amount = Double.parseDouble((resultSet.getString(2)));
             Date date = Date.valueOf(resultSet.getString(3));
 
 
-            Payment payment = new Payment(paymentId,Amount,date);
+            Payment payment = new Payment(paymentId,amount,date);
             return payment;
 
         }
@@ -50,10 +50,10 @@ public class PaymentRepo {
 
         while (resultSet.next()) {
             String paymentId = resultSet.getString(1);
-            int Amount = Integer.parseInt(resultSet.getString(2));
+            double amount = Integer.parseInt(resultSet.getString(2));
             Date date = Date.valueOf(resultSet.getString(3));
 
-            Payment payment = new Payment(paymentId,Amount,date);
+            Payment payment = new Payment(paymentId,amount,date);
             paymentList.add(payment);
         }
         return paymentList;

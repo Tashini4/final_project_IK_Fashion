@@ -1,15 +1,15 @@
 package lk.ijse.repository;
 
 import lk.ijse.db.DbConnection;
-import lk.ijse.model.OrderItem;
+import lk.ijse.model.OrderDetail;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class OrderItemRepo {
-    public static boolean save(List<OrderItem> odList) throws SQLException {
-        for (OrderItem od : odList) {
+public class OrderDetailRepo {
+    public static boolean save(List<OrderDetail> odList) throws SQLException {
+        for (OrderDetail od : odList) {
             boolean isSaved = saveOrderItem(od);
             if(!isSaved) {
                 return false;
@@ -19,8 +19,8 @@ public class OrderItemRepo {
 
     }
 
-    private static boolean saveOrderItem(OrderItem od) throws SQLException {
-        String sql = "INSERT INTO OrderItem (itemId, orderId, qty,unitPrice,total) VALUES (?, ?, ?, ?)";
+    private static boolean saveOrderItem(OrderDetail od) throws SQLException {
+        String sql = "INSERT INTO orderDetails (itemId, orderId, qty,unitPrice,total) VALUES (?, ?, ?, ?,?)";
 
         PreparedStatement pvsm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -29,7 +29,7 @@ public class OrderItemRepo {
         pvsm.setString(2, od.getOrderId());
         pvsm.setInt(3, od.getQty());
         pvsm.setDouble(4, od.getUnitPrice());
-        pvsm.setDouble(4, od.getTotal());
+        pvsm.setDouble(5,  od.getTotal());
 
 
 

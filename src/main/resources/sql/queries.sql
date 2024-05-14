@@ -97,7 +97,7 @@ create table orderEmployee(
                               foreign key (employeeId) references employees(employeeId)on UPDATE cascade on DELETE cascade
 );
 
-create table orderItem(
+create table orderDetails(
                           itemId VARCHAR(5) not null ,
                           orderId VARCHAR(5) not null ,
                           qty INT not null ,

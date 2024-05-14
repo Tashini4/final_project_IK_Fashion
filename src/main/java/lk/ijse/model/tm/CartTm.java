@@ -13,7 +13,7 @@ public class CartTm {
     private String itemId;
     private String description;
     private int qty;
-    private int unitPrice;
-    private int total;
+    private double unitPrice;
+    private double total;
     private JFXButton btnRemove;
 }

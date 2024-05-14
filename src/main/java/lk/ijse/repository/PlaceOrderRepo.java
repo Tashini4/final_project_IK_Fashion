@@ -18,7 +18,7 @@ public class PlaceOrderRepo {
                 if (isOrderSaved) {
                     boolean isQtyUpdated = ItemRepo.update1(po.getOdList());
                     if (isQtyUpdated) {
-                        boolean isOrderItemSaved = OrderItemRepo.save(po.getOdList());
+                        boolean isOrderItemSaved = OrderDetailRepo.save(po.getOdList());
                         if (isOrderItemSaved) {
 
                             connection.commit();

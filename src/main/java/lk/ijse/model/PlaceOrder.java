@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 public class PlaceOrder {
     private Order order;
-    private List<OrderItem> odList;
+    private List<OrderDetail> odList;
     private Payment payment;
 }

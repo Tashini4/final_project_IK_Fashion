@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Inventory {
     private String inventoryId;
     private int qty;
-    private int costPrice;
-    private int sellingPrice;
+    private double costPrice;
+    private double sellingPrice;
     private String supplierId;
 }

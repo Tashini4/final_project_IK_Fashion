@@ -44,6 +44,10 @@ public class OrderFormController {
     private Button btnPlaceOrder;
 
     @FXML
+    private Button btnPrintBill;
+
+
+    @FXML
     private ComboBox<String> cmbCustomerId;
 
     @FXML
@@ -80,6 +84,9 @@ public class OrderFormController {
     private Label lblOrderId;
 
     @FXML
+    private Label lblNetTotal;
+
+    @FXML
     private Label lblPaymentAmount;
 
     @FXML
@@ -104,9 +111,13 @@ public class OrderFormController {
     private TableView<CartTm> tblPlaceOrder;
 
     @FXML
+    private TextField txtDiscount;
+
+    @FXML
     private TextField txtQty;
 
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
+    private double discount;
 
     public void initialize() {
         getCurrentOrderId();
@@ -120,6 +131,7 @@ public class OrderFormController {
         addHoverHandlers(btnBack);
         addHoverHandlers(btnPlaceOrder);
         addHoverHandlers(btnNewCustomer);
+        addHoverHandlers(btnPrintBill);
 
         cmbCustomerId.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -146,6 +158,9 @@ public class OrderFormController {
         button.setOnMouseExited(event -> {
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
         });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
+        });
     }
 
 
@@ -161,8 +176,8 @@ public class OrderFormController {
             String currentId = OrderRepo.getCurrentId();
 
             String nextOrderId = generateNextOrderId(currentId);
-
             lblOrderId.setText(nextOrderId);
+
         }catch (SQLException e){
             throw new RuntimeException();
         }
@@ -202,7 +217,7 @@ public class OrderFormController {
             }
             cmbItemId.setItems(obList);
         }catch (SQLException e){
-            showAlert(Alert.AlertType.ERROR, "Error occurred while fetching Products IDs: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error occurred while fetching Items IDs: " + e.getMessage());
         }
     }
 
@@ -226,9 +241,9 @@ public class OrderFormController {
     void btnAddToCartOnAction(ActionEvent event) {
         String itemId = cmbItemId.getValue();
         String description = lblDescription.getText();
-        int unitPrice = Integer.parseInt(lblUnitPrice.getText());
-        int qty = Integer.parseInt(txtQty.getText());
-        int total = unitPrice * qty;
+        double unitPrice = Double.parseDouble(((lblUnitPrice.getText())));
+        int qty = Integer.parseInt((txtQty.getText()));
+        double total = unitPrice * qty;
 
         JFXButton btnRemove = new JFXButton("remove");
         btnRemove.setCursor(Cursor.HAND);
@@ -239,7 +254,7 @@ public class OrderFormController {
             Optional<ButtonType> type = new Alert(Alert.AlertType.INFORMATION,"Are you sure to remove?",yes,no).showAndWait();
 
             if (type.orElse(no) == yes){
-                CartTm selectedIndex = (CartTm) tblPlaceOrder.getSelectionModel().getSelectedItem();
+                CartTm selectedIndex = tblPlaceOrder.getSelectionModel().getSelectedItem();
                 obList.remove(selectedIndex);
                  tblPlaceOrder.refresh();
                  calculateNetTotal();
@@ -258,7 +273,7 @@ public class OrderFormController {
                 return;
             }
         }
-        CartTm tm = new CartTm(itemId,description,unitPrice,qty,total,btnRemove);
+        CartTm tm = new CartTm(itemId,description,qty,unitPrice,total,btnRemove);
         obList.add(tm);
 
         tblPlaceOrder.setItems(obList);
@@ -269,9 +284,15 @@ public class OrderFormController {
     private void calculateNetTotal() {
         int netTotal = 0;
         for (int i = 0;i<tblPlaceOrder.getItems().size();i++){
-            netTotal += (int) colTotal.getCellData(i);
+            netTotal += (double) colTotal.getCellData(i);
         }
-        lblPaymentAmount.setText(String.valueOf(netTotal));
+        lblNetTotal.setText(String.valueOf(netTotal));
+        double discountedAmount = calculateDiscountedAmount(netTotal); // Calculate discounted amount
+        lblPaymentAmount.setText(String.valueOf(discountedAmount));
+    }
+
+    private double calculateDiscountedAmount(double amount) {
+        return amount * (1- discount);
     }
 
     @FXML
@@ -305,14 +326,14 @@ public class OrderFormController {
         Date date = Date.valueOf(LocalDate.now());
         String customerId = cmbCustomerId.getValue();
         String paymentId = lblPaymentId.getText();
-        int amount = Integer.parseInt(lblPaymentAmount.getText());
+        double amount = Double.parseDouble((lblPaymentAmount.getText()));
 
         var order = new Order(orderId, date, customerId, paymentId);
-        List<OrderItem> odList = new ArrayList<>();
+        List<OrderDetail> odList = new ArrayList<>();
 
         for (int i = 0; i < tblPlaceOrder.getItems().size(); i++) {
             CartTm tm = obList.get(i);
-            OrderItem od= new OrderItem(
+            OrderDetail od= new OrderDetail(
                     tm.getItemId(),
                     orderId,
                     tm.getQty(),
@@ -344,6 +365,13 @@ public class OrderFormController {
             new Alert(Alert.AlertType.WARNING,"Order Placed Unsucessfully!").show();
         }
     }
+    @FXML
+    void txtDiscountOnAction(ActionEvent event) {
+        discount = Double.parseDouble(txtDiscount.getText()) / 100; // Get discount from the TextField
+        calculateNetTotal(); // Recalculate net total with discount
+    }
+
+
 
     private void getCurrentPaymentId() {
         try {
@@ -399,5 +427,12 @@ public class OrderFormController {
             throw new RuntimeException(e);
         }
     }
+    @FXML
+    void btnPrintBillOnAction(ActionEvent event) {
 
+    }
+
+    public void txtQtyOnAction(ActionEvent actionEvent) {
+        btnAddToCartOnAction(actionEvent);
+    }
 }

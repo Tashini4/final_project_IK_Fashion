@@ -11,8 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import lk.ijse.model.Inventory;
 import lk.ijse.model.Item;
 import lk.ijse.model.tm.ItemTm;
+import lk.ijse.repository.InventoryRepo;
 import lk.ijse.repository.ItemRepo;
 
 import java.io.IOException;
@@ -97,7 +99,7 @@ public class itemFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> idList =  ItemRepo.getIds();
+            List<String> idList =  InventoryRepo.getIds();
 
             for (String id : idList){
                 obList.add(id);
@@ -227,9 +229,9 @@ public class itemFormController {
     void cmbInventoryOnAction(ActionEvent event) {
         String inventoryId = cmbInventoryId.getValue();
         try {
-            Item item = ItemRepo.searchById(inventoryId);
+            Inventory inventory = InventoryRepo.searchById(inventoryId);
 
-           cmbInventoryId.setValue(item.getInventoryId());
+           cmbInventoryId.setValue(inventory.getInventoryId());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -25,8 +25,8 @@ public class PlaceOrderRepo {
                             connection.commit();
                             return true;
                         } new Alert(Alert.AlertType.ERROR, "orderdetail not update").show();
-                    }new Alert(Alert.AlertType.ERROR, "Item not update").show();
-                }new Alert(Alert.AlertType.ERROR, "order not update").show();
+                    } new Alert(Alert.AlertType.ERROR, "Item not update").show();
+                } new Alert(Alert.AlertType.ERROR, "order not update").show();
             } new Alert(Alert.AlertType.ERROR, "Payament not update").show();
             connection.rollback();
             return false;

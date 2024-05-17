@@ -109,8 +109,8 @@ create table orderDetails(
 
 create table salary(
                        salaryId VARCHAR(5) PRIMARY KEY,
-                       salaryAmount DECIMAL(15,3) not null ,
                        salaryDate DATE not null ,
+                       salaryAmount DECIMAL(15,3) not null ,
                        employeeId VARCHAR(5) not null ,
                        foreign key (employeeId) references employees(employeeId)on UPDATE cascade on DELETE cascade
 );

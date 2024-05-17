@@ -12,8 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.Util.CustomerRegex;
+import lk.ijse.Util.CustomerTextField;
 import lk.ijse.model.*;
 import lk.ijse.model.tm.CartTm;
 import lk.ijse.repository.CustomerRepo;
@@ -102,10 +105,10 @@ public class OrderFormController {
     private Label lblUnitPrice;
 
     @FXML
-    private AnchorPane root;
+    private Label lblBalance;
 
     @FXML
-    private AnchorPane rootNode;
+    private AnchorPane root;
 
     @FXML
     private TableView<CartTm> tblPlaceOrder;
@@ -115,6 +118,9 @@ public class OrderFormController {
 
     @FXML
     private TextField txtQty;
+
+    @FXML
+    private TextField txtCash;
 
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
     private double discount;
@@ -322,6 +328,19 @@ public class OrderFormController {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) throws SQLException {
+        double cash = 0.0;
+        try {
+            cash = Double.parseDouble(txtCash.getText());
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Please enter a valid cash amount.");
+            return;
+        }
+
+        double paymentAmount = Double.parseDouble(lblPaymentAmount.getText());
+        if (cash < paymentAmount) {
+            showAlert(Alert.AlertType.ERROR, "Insufficient cash amount.");
+            return;
+        }
         String orderId = lblOrderId.getText();
         Date date = Date.valueOf(LocalDate.now());
         String customerId = cmbCustomerId.getValue();
@@ -357,6 +376,8 @@ public class OrderFormController {
             lblUnitPrice.setText("");
             lblQtyOnHand.setText("");
             txtQty.clear();
+            txtCash.clear();
+            lblBalance.setText("");
             getCurrentOrderId();
             getCurrentPaymentId();
 
@@ -433,6 +454,35 @@ public class OrderFormController {
     }
 
     public void txtQtyOnAction(ActionEvent actionEvent) {
+
         btnAddToCartOnAction(actionEvent);
+    }
+    @FXML
+    void txtCashOnAction(ActionEvent event) {
+        calculateBalance();
+    }
+
+    private void calculateBalance() {
+        double cash = 0.0;
+        try {
+            cash = Double.parseDouble(txtCash.getText());
+        } catch (NumberFormatException e) {
+            lblBalance.setText("Invalid input");
+            return;
+        }
+
+        double paymentAmount = Double.parseDouble(lblPaymentAmount.getText());
+        double balance = cash - paymentAmount;
+        lblBalance.setText(String.valueOf(balance));
+    }
+
+    @FXML
+    void txtQtyOnKeyReleased(KeyEvent event) {
+        CustomerRegex.setTextColor(CustomerTextField.NUMBER,txtQty);
+    }
+
+
+    public void txtCashOnKeyRelesed(KeyEvent keyEvent) {
+        calculateBalance();
     }
 }

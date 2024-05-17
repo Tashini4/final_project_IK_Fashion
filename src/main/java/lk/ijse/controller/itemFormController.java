@@ -167,10 +167,10 @@ public class itemFormController {
 
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/stockForm.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene(new Scene(anchorPane));
-        stage.setTitle("Stock Form");
+        stage.setTitle("DashBoard form");
         stage.centerOnScreen();
     }
 

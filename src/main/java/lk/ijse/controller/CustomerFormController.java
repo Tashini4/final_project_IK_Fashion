@@ -11,8 +11,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.Util.CustomerRegex;
+import lk.ijse.Util.CustomerTextField;
 import lk.ijse.model.Customer;
 import lk.ijse.model.tm.CustomerTm;
 import lk.ijse.repository.CustomerRepo;
@@ -172,6 +175,17 @@ public class CustomerFormController {
         }
 
     }
+    public boolean isValied(){
+        if (!CustomerRegex.setTextColor(CustomerTextField.ID,txtId))return false;
+        if (!CustomerRegex.setTextColor(CustomerTextField.NAME,txtName)) return false;
+        if (!CustomerRegex.setTextColor(CustomerTextField.EMAIL,txtEmail)) return false;
+        if (!CustomerRegex.setTextColor(CustomerTextField.CONTACT,txtContact)) return false;
+        if (!CustomerRegex.setTextColor(CustomerTextField.NAME,txtAddress)) return false;
+
+
+
+        return true;
+    }
 
 
 
@@ -189,6 +203,35 @@ public class CustomerFormController {
         } else {
             new Alert(Alert.AlertType.INFORMATION, "customer not found!").show();
         }
+
+    }
+    @FXML
+    void txtAddressOnKeyReleased(KeyEvent event) {
+
+        CustomerRegex.setTextColor(CustomerTextField.ADDRESS,txtAddress);
+    }
+
+    @FXML
+    void txtContactOnKeyReleased(KeyEvent event) {
+
+        CustomerRegex.setTextColor(CustomerTextField.CONTACT,txtContact);
+    }
+
+    @FXML
+    void txtEmailOnKeyReleased(KeyEvent event) {
+
+        CustomerRegex.setTextColor(CustomerTextField.EMAIL,txtEmail);
+    }
+
+    @FXML
+    void txtIdOnKeyReleased(KeyEvent event) {
+
+        CustomerRegex.setTextColor(CustomerTextField.ID,txtId);
+    }
+
+    @FXML
+    void txtNameOnKeyReleased(KeyEvent event) {
+        CustomerRegex.setTextColor(CustomerTextField.NAME,txtName);
 
     }
 }

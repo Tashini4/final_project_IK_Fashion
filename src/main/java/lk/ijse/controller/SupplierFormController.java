@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AddSupplierFormController {
+public class SupplierFormController {
 
     @FXML
     private TableColumn<?, ?> colSupplierAddress;

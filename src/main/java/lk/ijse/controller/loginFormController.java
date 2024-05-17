@@ -8,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.Util.CustomerRegex;
+import lk.ijse.Util.CustomerTextField;
 import lk.ijse.model.User.User;
 import lk.ijse.repository.UserRepo;
 
@@ -70,6 +73,7 @@ public class loginFormController {
         stage.centerOnScreen();
         stage.setTitle("Dashboard Form");
     }
+
 }
 
 

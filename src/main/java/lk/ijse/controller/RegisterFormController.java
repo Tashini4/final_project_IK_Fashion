@@ -4,18 +4,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.stage.Stage;
+import lk.ijse.Util.CustomerRegex;
+import lk.ijse.Util.CustomerTextField;
 import lk.ijse.model.Register;
 import lk.ijse.model.tm.RegisterTm;
 
 import lk.ijse.repository.RegisterRepo;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -87,15 +94,12 @@ public class RegisterFormController {
     }
 
     @FXML
-    void btnClearOnAction(ActionEvent event) {
-        clearFields();
-    }
-
-    private void clearFields() {
-        txtRegisterId.setText("");
-        txtName.setText("");
-        txtPosition.setText("");
-        txtPassword.setText("");
+    void btnBackOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
+        Stage stage = (Stage) rootNode.getScene().getWindow();
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("Dashboard Form");
+        stage.centerOnScreen();
     }
 
 
@@ -107,8 +111,6 @@ public class RegisterFormController {
             boolean Delete = RegisterRepo.delete(id);
             if (Delete) {
                 new Alert(Alert.AlertType.CONFIRMATION, "User Deleted").show();
-                loadAllCustomers();
-                clearFields();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -129,8 +131,6 @@ public class RegisterFormController {
             boolean Save = RegisterRepo.save(register);
             if (Save) {
                 new Alert(Alert.AlertType.CONFIRMATION, " User saved!").show();
-                loadAllCustomers();
-                clearFields();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -172,6 +172,20 @@ public class RegisterFormController {
         }
 
     }
+    @FXML
+    void txtIdOnKeyReleased(KeyEvent event) {
+
+        CustomerRegex.setTextColor(CustomerTextField.ID,txtRegisterId);
+    }
+    @FXML
+    void txtNameOnKeyReleased(KeyEvent event) {
+        CustomerRegex.setTextColor(CustomerTextField.NAME,txtName);
+
+    }
+    @FXML
+    void txtPasswordOnKeyReleased(KeyEvent event){
+        CustomerRegex.setTextColor(CustomerTextField.PASSWORD,txtPassword);
+}
 }
 
 

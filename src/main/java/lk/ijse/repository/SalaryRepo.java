@@ -21,28 +21,27 @@ public class SalaryRepo {
         List<Salary> salaryList = new ArrayList<>();
 
         while (resultSet.next()) {
-            String employeeId = resultSet.getString(1);
-            String salaryId = resultSet.getString(2);
-            String date = resultSet.getString(3);
-            String amount = resultSet.getString(4);
+            String salaryId = resultSet.getString(1);
+            String date = resultSet.getString(2);
+            String amount = resultSet.getString(3);
+            String employeeId = resultSet.getString(4);
 
 
-            Salary salary = new Salary(employeeId, salaryId, date, amount);
+            Salary salary = new Salary(salaryId, date, amount, employeeId);
             salaryList.add(salary);
         }
         return salaryList;
     }
 
     public static boolean update(Salary salary) throws SQLException {
-        String sql = "UPDATE salary SET  employeeId = ?, salaryDate = ?, salaryAmount = ? WHERE salaryId = ?";
+        String sql = "UPDATE salary SET salaryDate = ?, salaryAmount = ? ,employeeId = ? WHERE salaryId = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pvsm= connection.prepareStatement(sql);
-
-        pvsm.setObject(1, salary.getEmployeeId());
+        PreparedStatement pvsm = connection.prepareStatement(sql);
         pvsm.setObject(2, salary.getSalaryDate());
         pvsm.setObject(3, salary.getSalaryAmount());
-        pvsm.setObject(4, salary.getSalaryId());
+        pvsm.setObject(4, salary.getEmployeeId());
+        pvsm.setObject(1, salary.getSalaryId());
 
         return pvsm.executeUpdate() > 0;
     }
@@ -52,11 +51,10 @@ public class SalaryRepo {
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
-        pvsm.setObject(1, salary.getEmployeeId());
-        pvsm.setObject(2, salary.getSalaryId());
-        pvsm.setObject(3, salary.getSalaryDate());
-        pvsm.setObject(4, salary.getSalaryAmount());
-
+        pvsm.setObject(2, salary.getSalaryDate());
+        pvsm.setObject(3, salary.getSalaryAmount());
+        pvsm.setObject(4, salary.getEmployeeId());
+        pvsm.setObject(1, salary.getSalaryId());
 
 
         return pvsm.executeUpdate() > 0;
@@ -71,22 +69,24 @@ public class SalaryRepo {
 
         ResultSet resultSet = pvsm.executeQuery();
         if (resultSet.next()) {
-            String employeeId = resultSet.getString(1);
-            String salaryId = resultSet.getString(2);
-            String date = resultSet.getString(3);
-            String amount = resultSet.getString(4);
+            String salaryId = resultSet.getString(1);
+            String date = resultSet.getString(2);
+            String amount = resultSet.getString(3);
+            String employeeId = resultSet.getString(4);
 
 
-
-            Salary salary = new Salary(employeeId,salaryId,date,amount);
+            Salary salary = new Salary(salaryId, date, amount, employeeId);
 
             return salary;
         }
 
         return null;
     }
-
 }
+
+
+
+
 
 
 

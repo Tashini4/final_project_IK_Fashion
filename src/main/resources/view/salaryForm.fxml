@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!--<AnchorPane fx:id="rootNode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">-->
+
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SalaryFormController">
+   <children>
+      <Label layoutX="438.0" layoutY="33.0" prefHeight="45.0" prefWidth="486.0" text="Salary Manage System" textFill="#070707">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="61.0" layoutY="112.0" prefHeight="634.0" prefWidth="409.0" style="-fx-background-color: White;">
+         <children>
+            <Label layoutX="27.0" layoutY="213.0" text="EmployeeID :">
+               <font>
+                  <Font name="Abyssinica SIL" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="56.0" layoutY="55.0" text="SalaryID :">
+               <font>
+                  <Font name="Abyssinica SIL" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtSalaryId" layoutX="157.0" layoutY="55.0" onAction="#txtSearchOnAction" onKeyReleased="#txtSalaryIdOnKeyRelesed" prefHeight="28.0" prefWidth="205.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="89.0" layoutY="110.0" text="Date :">
+               <font>
+                  <Font name="Abyssinica SIL" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtDate" layoutX="157.0" layoutY="110.0" prefHeight="28.0" prefWidth="205.0">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Label layoutX="36.0" layoutY="159.0" text="Amount $ :">
+               <font>
+                  <Font name="Abyssinica SIL" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtAmount" layoutX="157.0" layoutY="159.0" prefHeight="28.0" prefWidth="205.0">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Button fx:id="btnSave" layoutX="159.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="55.0" prefWidth="91.0" style="-fx-background-color: gray;" text="Save" textFill="#fffefe">
+               <font>
+                  <Font name="Abyssinica SIL" size="24.0" />
+               </font>
+            </Button>
+            <Button layoutX="159.0" layoutY="512.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="55.0" prefWidth="91.0" style="-fx-background-color: gray;" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="Abyssinica SIL" size="24.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="cmbEmployeeId" layoutX="156.0" layoutY="215.0" onAction="#cmbEmployeeIdOnAction" prefHeight="25.0" prefWidth="205.0" />
+            <Button fx:id="btnUpdate" layoutX="140.0" layoutY="406.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="55.0" prefWidth="129.0" style="-fx-background-color: gray;" text="Update" textFill="#fffefe">
+               <font>
+                  <Font name="Abyssinica SIL" size="24.0" />
+               </font>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+      <AnchorPane layoutX="499.0" layoutY="102.0" prefHeight="635.0" prefWidth="964.0">
+         <children>
+            <TableView fx:id="tblSalary" layoutX="38.0" layoutY="17.0" prefHeight="582.0" prefWidth="925.0">
+              <columns>
+                <TableColumn fx:id="colSalaryId" prefWidth="201.81890869140625" text="SalaryID" />
+                  <TableColumn fx:id="colDate" prefWidth="227.27362060546875" text="Date" />
+                  <TableColumn fx:id="colAmount" prefWidth="240.00079345703125" text="Amount $" />
+                  <TableColumn fx:id="colEmployeeId" prefWidth="277.2738037109375" text="EmoloyeeId" />
+              </columns>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnBack" layoutX="1372.0" layoutY="752.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="35.0" prefWidth="91.0" style="-fx-background-color: gray;" text="Back">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>

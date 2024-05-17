@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Salary {
-    private  String employeeId;
     private String salaryId;
     private String salaryDate;
     private String salaryAmount;
+    private  String employeeId;
 
 }

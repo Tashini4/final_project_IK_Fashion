@@ -8,11 +8,6 @@ create table customers(
                           customerContact VARCHAR(15) not null ,
                           customerAddress VARCHAR(50) not null
 );
-insert into customers values ('C001','Tashini','tashini@gmail.com','0783415581','Badugama');
-insert into customers values ('C002','Chaminda','chami@gmail.com','0712714329','Pimbura');
-insert into customers values ('C003','Kalum','kalum@gmail.com','0712749585','Aluthgama');
-insert into customers values ('C004','Pathumi','p@gmail.com','0755911647','Colombo');
-insert into customers values ('C005','Pawani','pawani@gmail.com','0752247352','Bopitiya');
 
 
 create table payments(
@@ -39,8 +34,7 @@ create table employees(
                           employeeAddress VARCHAR(50) not null ,
                           employeeGender VARCHAR(20) not null
 );
-insert  into employees values ('E001','Tharuka','tharu@gmail.com','0786543129','Baduraliya','FEMALE');
-insert into employees values ('E002','Sathsarani','sathi@gmail.com','0754321567','Colombo','FEMALE');
+
 
 create table tasks(
                       taskId VARCHAR(5) PRIMARY KEY,
@@ -54,8 +48,7 @@ create table suppliers(
                           supplierContact VARCHAR(15) not null ,
                           supplierAddress VARCHAR(50) not null
 );
-insert into suppliers values ('S001','Nalin','n@123gmail,com','0765489432','Panadura');
-insert into suppliers values ('S002','Kariyawasam','k12@gmail.com','076538902','Malabada');
+
 
 create table employeeTask(
                              taskId VARCHAR(5) not null ,
@@ -72,8 +65,7 @@ create table inventory(
                           supplierId VARCHAR(5) not null ,
                           foreign key (supplierId) references suppliers(supplierId)on UPDATE cascade on DELETE cascade
 );
-INSERT INTO inventory values ('IN001',10,400.00,600.00,'S001');
-insert into inventory values ('IN002',15,500.00,1000.00,'S002');
+
 
 create table items(
                       itemId VARCHAR(5)PRIMARY KEY,
@@ -85,8 +77,7 @@ create table items(
                       inventoryId VARCHAR(5) not null ,
                       foreign key (inventoryId) references inventory(inventoryId)on UPDATE cascade on DELETE cascade
 );
-insert into items values ('I001','Shirt','Mouse','XL','500.00','2','IN001');
-insert into items values ('I003','Frock','ALine','S','1000.00','1','IN002');
+
 
 create table orderEmployee(
                               orderId VARCHAR(5)not null ,
@@ -131,6 +122,5 @@ create table register(
                           registerPassword VARCHAR(30) not null
 );
 
-INSERT INTO register VALUES('R001','Tashini','cashier','tashi2002###');
 
 

@@ -16,7 +16,7 @@ public class Launcher extends Application {
     public void start(Stage stage) throws Exception {
 
         //this.stage=stage;
-        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/dashboardForm.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/frontForm.fxml"))));
         stage.setTitle("Front Form");
         stage.centerOnScreen();
         stage.show();

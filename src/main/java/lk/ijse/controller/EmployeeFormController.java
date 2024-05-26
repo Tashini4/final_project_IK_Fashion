@@ -87,6 +87,17 @@ public class EmployeeFormController {
         setCellValueFactory();
         loadAllEmployee();
         setGender();
+        setTableAction();
+    }
+    private void setTableAction() {
+        tblEmployee.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            txtId.setText(newSelection.getId());
+            txtName.setText(newSelection.getName());
+            txtEmail.setText(newSelection.getEmail());
+            txtContact.setText(newSelection.getContact());
+            txtAddress.setText(newSelection.getAddress());
+            cmbGender.setValue(newSelection.getGender());
+        });
     }
 
     private void setGender() {
@@ -183,6 +194,7 @@ public class EmployeeFormController {
             boolean Save = EmployeeRepo.save(employee);
             if(Save){
                 new Alert(Alert.AlertType.CONFIRMATION,"employee Saved!").show();
+                loadAllEmployee();
                 clearFields();
             }
         }catch (SQLException e){
@@ -205,6 +217,7 @@ public class EmployeeFormController {
             boolean Update = EmployeeRepo.update(employee);
             if(Update){
                 new Alert(Alert.AlertType.CONFIRMATION,"employee Update!").show();
+                loadAllEmployee();
                 clearFields();
             }
         }catch (SQLException e){

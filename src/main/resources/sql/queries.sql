@@ -20,8 +20,8 @@ create table payments(
 create table orders(
                        orderId VARCHAR(5) PRIMARY KEY,
                        OrderDate DATE not null ,
-                       customerID VARCHAR(5) not null ,
-                       paymentID VARCHAR(5) not null ,
+                       customerId VARCHAR(5) not null ,
+                       paymentId VARCHAR(5) not null ,
                        foreign key (customerId) references customers(customerId)on DELETE cascade on UPDATE cascade,
                        foreign key (paymentId) references payments(paymentId)on UPDATE cascade on DELETE cascade
 );
@@ -45,9 +45,12 @@ create table suppliers(
                           supplierId VARCHAR(5) PRIMARY KEY,
                           supplierName VARCHAR(30)not null ,
                           supplierEmail VARCHAR(30)not null ,
-                          supplierContact VARCHAR(15) not null ,
-                          supplierAddress VARCHAR(50) not null
+                          supplierAddress VARCHAR(15) not null ,
+                          supplierContact VARCHAR(50) not null
 );
+insert into suppliers values ('S0001','Karunarathna','karu@gmail.com','Maharagama','0776543210');
+insert into suppliers values ('S0002','Priynatha','p123@gmail.com','Panadura','0756789012');
+insert into suppliers values ('S0003','Sumanarathna','suma@gmail.com','Baduraliya','0765432190');
 
 
 create table employeeTask(
@@ -65,6 +68,11 @@ create table inventory(
                           supplierId VARCHAR(5) not null ,
                           foreign key (supplierId) references suppliers(supplierId)on UPDATE cascade on DELETE cascade
 );
+insert into inventory values ('IN001',20,'2700.00','3500.00','S0003');
+insert into inventory values ('IN002',40,'500.00','1000.00','S0002');
+insert into inventory values ('IN003',10,'600.00','15000.00','S0001');
+
+
 
 
 create table items(

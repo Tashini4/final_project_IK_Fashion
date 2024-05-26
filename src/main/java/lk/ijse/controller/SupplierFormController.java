@@ -64,6 +64,16 @@ public class SupplierFormController {
     public void initialize(){
         setCellValueFactory();
         loadAllSupplier();
+        setTableAction();
+    }
+    private void setTableAction() {
+        tblSupplier.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            txtId.setText(newSelection.getSupplierId());
+            txtName.setText(newSelection.getSupplierName());
+            txtEmail.setText(newSelection.getSupplierEmail());
+            txtAddress.setText(newSelection.getSupplierAddress());
+            txtContact.setText(newSelection.getSupplierContact());
+        });
     }
 
     private void loadAllSupplier() {
@@ -128,7 +138,6 @@ public class SupplierFormController {
             boolean Delete = SupplierRepo.delete(id);
             if(Delete) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier deleted!").show();
-                loadAllSupplier();
                 clearFields();
             }
         } catch (SQLException e) {
@@ -144,19 +153,17 @@ public class SupplierFormController {
         String address = txtAddress.getText();
         String contact = txtContact.getText();
 
-
-
         Supplier supplier = new Supplier(id, name, email , address,contact );
 
         try {
-            boolean Save= SupplierRepo.save(supplier);
+            boolean Save = SupplierRepo.save(supplier);
             if (Save) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier saved!").show();
                 loadAllSupplier();
-                clearFields();
+                //clearFields();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            new Alert(Alert.AlertType.ERROR,e.getMessage());
         }
     }
 
@@ -169,14 +176,13 @@ public class SupplierFormController {
         String contact = txtContact.getText();
 
 
-
-
         Supplier supplier = new Supplier(id, name,email,address,contact);
 
         try {
             boolean Update = SupplierRepo.update(supplier);
             if(Update) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier updated!").show();
+                loadAllSupplier();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();

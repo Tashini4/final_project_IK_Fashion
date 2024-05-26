@@ -12,7 +12,7 @@ public class SupplierTm {
     private  String supplierId;
     private  String supplierName;
     private  String supplierEmail;
-    private  String supplierContact;
     private  String supplierAddress;
+    private  String supplierContact;
 
 }

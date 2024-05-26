@@ -63,6 +63,16 @@ public class RegisterFormController {
     public void initialize() {
         setCellValueFactory();
         loadAllCustomers();
+        setTableAction();
+    }
+    private void setTableAction() {
+        tblRegister.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            txtRegisterId.setText(newSelection.getRegisterId());
+            txtName.setText(newSelection.getRegisterName());
+            txtPosition.setText(newSelection.getRegisterPosition());
+            txtPassword.setText(newSelection.getRegisterPassword());
+
+        });
     }
 
     private void setCellValueFactory() {

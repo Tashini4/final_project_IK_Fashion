@@ -65,7 +65,17 @@ public class CustomerFormController {
     public void initialize() {
         setCellValueFactory();
         loadAllCustomer();
+        setTableAction();
 
+    }
+    private void setTableAction() {
+        tblCustomer.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            txtId.setText(newSelection.getId());
+            txtName.setText(newSelection.getName());
+            txtEmail.setText(newSelection.getEmail());
+            txtContact.setText(newSelection.getContact());
+            txtAddress.setText(newSelection.getAddress());
+        });
     }
 
     private void loadAllCustomer() {
@@ -145,9 +155,11 @@ public class CustomerFormController {
         Customer customer = new Customer(id, name, email, contact, address);
 
         try {
+            if (isValied()){}
             boolean isSaved = CustomerRepo.save(customer);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
+                loadAllCustomer();
                 clearFields();
             }
         } catch (SQLException e) {
@@ -169,6 +181,7 @@ public class CustomerFormController {
             boolean isUpdated = CustomerRepo.update(customer);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
+                loadAllCustomer();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();

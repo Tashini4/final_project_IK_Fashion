@@ -8,10 +8,11 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.db.DbConnection;
-import lk.ijse.model.Register;
+
 
 import java.io.IOException;
 import java.sql.*;
@@ -70,6 +71,20 @@ public class DashBoardFormController {
         setUserCount(userCount);
         setEmployeeCount(employeeCount);
 
+        addChartEventHandlers();
+    }
+
+    private void addChartEventHandlers() {
+        ChartEmployee.setOnMouseClicked(this::handleChartEmployeeClick);
+        ChartSalary.setOnMouseClicked(this::handleChartSalaryClick);
+    }
+
+    private void handleChartSalaryClick(MouseEvent mouseEvent) {
+        System.out.println("Salary chart clicked");
+    }
+
+    private void handleChartEmployeeClick(MouseEvent mouseEvent) {
+        System.out.println("Employee chart clicked");
     }
 
     private int getEmployeeCount() throws SQLException {

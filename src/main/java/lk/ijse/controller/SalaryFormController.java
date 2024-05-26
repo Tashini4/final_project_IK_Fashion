@@ -69,6 +69,16 @@ public class SalaryFormController {
         loadAllSalary();
         setCellValueFactory();
         getEmployeeIds();
+        setTableAction();
+    }
+    private void setTableAction() {
+        tblSalary.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            txtSalaryId.setText(newSelection.getSalaryId());
+            txtDate.setText(newSelection.getDate());
+            txtAmount.setText(newSelection.getAmount());
+            cmbEmployeeId.setValue(newSelection.getEmployeeId());
+
+        });
     }
 
     private void getEmployeeIds() {

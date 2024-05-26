@@ -28,9 +28,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class OrderFormController {
 
@@ -191,11 +189,11 @@ public class OrderFormController {
 
     private String generateNextOrderId(String currentId) {
         if (currentId != null){
-           int id = Integer.parseInt(currentId);
+           int id = Integer.parseInt((currentId));
            ++id;
-           return "O"+id;
+           return "0"+id;
         }
-        return "O1";
+        return "01";
     }
 
     private void getCustomerIds() {
@@ -448,10 +446,6 @@ public class OrderFormController {
             throw new RuntimeException(e);
         }
     }
-    @FXML
-    void btnPrintBillOnAction(ActionEvent event) {
-
-    }
 
     public void txtQtyOnAction(ActionEvent actionEvent) {
 
@@ -474,6 +468,15 @@ public class OrderFormController {
         double paymentAmount = Double.parseDouble(lblPaymentAmount.getText());
         double balance = cash - paymentAmount;
         lblBalance.setText(String.valueOf(balance));
+    }
+    @FXML
+    void btnPrintBillOnAction(ActionEvent event) {
+
+
+    }
+
+    private Object getTotal() {
+        return "5000";
     }
 
     @FXML

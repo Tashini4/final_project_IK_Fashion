@@ -8,9 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import lk.ijse.Util.CustomerRegex;
+import lk.ijse.Util.CustomerTextField;
 import lk.ijse.model.Inventory;
 import lk.ijse.model.Item;
 import lk.ijse.model.tm.ItemTm;
@@ -76,7 +79,19 @@ public class itemFormController {
         loadAllItem();
         getInventoryIds();
         setSize();
+        setTableAction();
 
+    }
+    private void setTableAction() {
+        tblItem.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            txtItemId.setText(newSelection.getItemId());
+            txtDescription.setText(newSelection.getDescription());
+            txtBrand.setText(newSelection.getBrand());
+            cmbSize.setValue(newSelection.getSize());
+            txtPrice.setText(String.valueOf(newSelection.getPrice()));
+            txtQtyOnHand.setText(String.valueOf(newSelection.getQtyOnHand()));
+            cmbInventoryId.setValue(newSelection.getInventoryId());
+        });
     }
 
     private void setSize() {
@@ -159,6 +174,7 @@ public class itemFormController {
             boolean isAdded = ItemRepo.add(item);
             if (isAdded){
                 new Alert(Alert.AlertType.CONFIRMATION,"Item added!").show();
+                loadAllItem();
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
@@ -197,6 +213,7 @@ public class itemFormController {
             boolean isDeleted = ItemRepo.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Item deleted!").show();
+
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -219,6 +236,7 @@ public class itemFormController {
             boolean isUpdated = ItemRepo.update(item);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "item updated!").show();
+                loadAllItem();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -260,7 +278,12 @@ public class itemFormController {
         } else {
             new Alert(Alert.AlertType.INFORMATION, "item not found!").show();
         }
+    }@FXML
+    void txtIdOnKeyReleased(KeyEvent event) {
+        CustomerRegex.setTextColor(CustomerTextField.ID,txtItemId);
     }
+
+
 }
 
 

@@ -239,7 +239,7 @@
                </effect></AnchorPane>
             <AnchorPane layoutX="56.0" layoutY="290.0" prefHeight="491.0" prefWidth="815.0" style="-fx-background-color: white;" styleClass="shadow">
                <children>
-                  <BarChart fx:id="ChartEmployee" layoutX="14.0" layoutY="21.0" prefHeight="464.0" prefWidth="768.0" title="Emplyee Data Chart">
+                  <BarChart fx:id="ChartTotalIncome" layoutX="14.0" layoutY="21.0" prefHeight="464.0" prefWidth="768.0" title="Total Income Chart">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -254,7 +254,7 @@
             </AnchorPane>
             <AnchorPane layoutX="882.0" layoutY="290.0" prefHeight="498.0" prefWidth="569.0" style="-fx-background-color: White;">
                <children>
-                  <BarChart fx:id="ChartSalary" layoutX="24.0" layoutY="22.0" prefHeight="445.0" prefWidth="500.0" title="salary chart">
+                  <BarChart fx:id="ChartOrder" layoutX="24.0" layoutY="22.0" prefHeight="445.0" prefWidth="500.0" title="Order chart">
                     <xAxis>
                       <CategoryAxis prefHeight="0.0" prefWidth="441.0" side="BOTTOM" />
                     </xAxis>

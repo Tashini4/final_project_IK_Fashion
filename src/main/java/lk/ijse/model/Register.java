@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Register {
     private String registerId;
 
-    private String registerName;
+    private String regiterName;
 
     private String registerPosition;
 

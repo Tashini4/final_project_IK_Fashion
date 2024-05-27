@@ -86,7 +86,7 @@
       </Button>
       <TableView fx:id="tblRegister" layoutX="517.0" layoutY="124.0" prefHeight="633.0" prefWidth="896.0">
         <columns>
-          <TableColumn fx:id="colUserId" prefWidth="184.546142578125" text="register Id" />
+          <TableColumn fx:id="colRegisterId" prefWidth="184.546142578125" text="register Id" />
             <TableColumn fx:id="colName" prefWidth="240.0008544921875" text="Name" />
             <TableColumn fx:id="colPosition" prefWidth="244.54632568359375" text="Position" />
             <TableColumn fx:id="colPassword" prefWidth="228.1826171875" text="Password" />

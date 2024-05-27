@@ -99,11 +99,11 @@ public class SupplierFormController {
 
 
     private void setCellValueFactory() {
-        colSupplierId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colSupplierEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colSupplierAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colSupplierContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+        colSupplierEmail.setCellValueFactory(new PropertyValueFactory<>("supplierEmail"));
+        colSupplierAddress.setCellValueFactory(new PropertyValueFactory<>("supplierAddress"));
+        colSupplierContact.setCellValueFactory(new PropertyValueFactory<>("supplierContact"));
 
     }
 
@@ -160,7 +160,7 @@ public class SupplierFormController {
             if (Save) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier saved!").show();
                 loadAllSupplier();
-                //clearFields();
+                clearFields();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage());

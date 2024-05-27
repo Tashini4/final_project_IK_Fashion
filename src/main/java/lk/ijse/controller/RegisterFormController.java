@@ -40,7 +40,7 @@ public class RegisterFormController {
     private TableColumn<?, ?> colPosition;
 
     @FXML
-    private TableColumn<?, ?> colUserId;
+    private TableColumn<?, ?> colRegisterId;
 
     @FXML
     private AnchorPane rootNode;
@@ -76,10 +76,10 @@ public class RegisterFormController {
     }
 
     private void setCellValueFactory() {
-        colUserId.setCellValueFactory(new PropertyValueFactory<>("User Id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        colPosition.setCellValueFactory(new PropertyValueFactory<>("Position"));
-        colPassword.setCellValueFactory(new PropertyValueFactory<>("Password"));
+        colRegisterId.setCellValueFactory(new PropertyValueFactory<>("registerId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("registerName"));
+        colPosition.setCellValueFactory(new PropertyValueFactory<>("registerPosition"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("registerPassword"));
 
     }
 
@@ -91,7 +91,7 @@ public class RegisterFormController {
             for (Register register : registerList) {
                 RegisterTm tm = new RegisterTm(
                         register.getRegisterId(),
-                        register.getRegisterName(),
+                        register.getRegiterName(),
                         register.getRegisterPosition(),
                         register.getRegisterPassword()
                 );
@@ -174,7 +174,7 @@ public class RegisterFormController {
         Register register = RegisterRepo.searchById(id);
         if (register != null) {
             txtRegisterId.setText(register.getRegisterId());
-            txtName.setText(register.getRegisterName());
+            txtName.setText(register.getRegiterName());
             txtPosition.setText(register.getRegisterPosition());
             txtPassword.setText(register.getRegisterPassword());
         } else {

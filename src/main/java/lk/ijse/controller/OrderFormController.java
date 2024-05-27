@@ -17,12 +17,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
+import lk.ijse.db.DbConnection;
 import lk.ijse.model.*;
 import lk.ijse.model.tm.CartTm;
 import lk.ijse.repository.CustomerRepo;
 import lk.ijse.repository.ItemRepo;
 import lk.ijse.repository.OrderRepo;
 import lk.ijse.repository.PlaceOrderRepo;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 
 import java.io.IOException;
 import java.sql.Date;
@@ -123,6 +130,8 @@ public class OrderFormController {
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
     private double discount;
 
+
+
     public void initialize() {
         getCurrentOrderId();
         setDate();
@@ -130,6 +139,7 @@ public class OrderFormController {
         getItemIds();
         setCellValueFactory();
         getCurrentPaymentId();
+
 
         addHoverHandlers(btnAddToCart);
         addHoverHandlers(btnBack);
@@ -166,6 +176,7 @@ public class OrderFormController {
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
         });
     }
+
 
 
 
@@ -470,16 +481,32 @@ public class OrderFormController {
         lblBalance.setText(String.valueOf(balance));
     }
     @FXML
-    void btnPrintBillOnAction(ActionEvent event) {
+    void btnPrintBillOnAction(ActionEvent event) throws JRException, SQLException {
 
+            JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/reports/Report.jrxml");
 
-    }
+            // Create and set the query
+            JRDesignQuery jrDesignQuery = new JRDesignQuery();
+            jrDesignQuery.setText("SELECT o.orderId, c.customerId, i.itemId, od.qty, od.unitPrice, od.total " +
+                    "FROM orders o " +
+                    "JOIN customers c ON o.customerId = c.customerId " +
+                    "JOIN orderDetails od ON o.orderId = od.orderId " +
+                    "JOIN items i ON od.itemId = i.itemId " +
+                    "WHERE o.orderId = ( " +
+                    "SELECT MAX(orderId) " +
+                    "FROM orders );");
+            ((JasperDesign) jasperDesign).setQuery(jrDesignQuery);
 
-    private Object getTotal() {
-        return "5000";
-    }
+            // Compile the Jasper report
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            int discount =
+            // Fill the report
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DbConnection.getInstance().getConnection());
 
-    @FXML
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+        }
+        @FXML
     void txtQtyOnKeyReleased(KeyEvent event) {
         CustomerRegex.setTextColor(CustomerTextField.NUMBER,txtQty);
     }

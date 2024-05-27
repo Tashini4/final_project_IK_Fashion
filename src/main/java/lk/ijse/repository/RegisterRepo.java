@@ -21,13 +21,13 @@ public class RegisterRepo {
         List<Register> registerList = new ArrayList<>();
 
         while (resultSet.next()) {
-            String userId = resultSet.getString(1);
+            String registerId = resultSet.getString(1);
             String name = resultSet.getString(2);
             String position = resultSet.getString(3);
             String password = resultSet.getString(4);
 
 
-            Register register = new Register(userId, name, position, password);
+            Register register = new Register(registerId, name, position, password);
             registerList.add(register);
         }
         return registerList;
@@ -49,7 +49,7 @@ public class RegisterRepo {
         PreparedStatement pvsm = connection.prepareStatement(sql);
 
         pvsm.setString(1, register.getRegisterId());
-        pvsm.setString(2, register.getRegisterName());
+        pvsm.setString(2, register.getRegiterName());
         pvsm.setString(3, register.getRegisterPosition());
         pvsm.setString(4, register.getRegisterPassword());
 
@@ -62,7 +62,7 @@ public class RegisterRepo {
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pvsm = connection.prepareStatement(sql);
 
-        pvsm.setString(1, register.getRegisterName());
+        pvsm.setString(1, register.getRegiterName());
         pvsm.setString(2, register.getRegisterPosition());
         pvsm.setString(3, register.getRegisterPassword());
         pvsm.setString(4, register.getRegisterId());

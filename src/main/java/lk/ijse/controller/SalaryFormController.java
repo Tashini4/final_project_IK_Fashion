@@ -165,6 +165,7 @@ public class SalaryFormController {
             boolean Save = SalaryRepo.save(salary);
             if (Save){
                 new Alert(Alert.AlertType.CONFIRMATION,"Salary saved!").show();
+                loadAllSalary();
                 clearFeilds();
             }
         }catch (SQLException e){
@@ -185,6 +186,7 @@ public class SalaryFormController {
             boolean Update = SalaryRepo.update(salary);
             if (Update){
                 new Alert(Alert.AlertType.CONFIRMATION,"Salary updated!").show();
+                loadAllSalary();
                 clearFeilds();
             }
         }catch (SQLException e){

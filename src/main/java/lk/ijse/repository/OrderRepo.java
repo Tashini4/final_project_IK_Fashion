@@ -6,6 +6,8 @@ import lk.ijse.model.Order;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderRepo {
 
@@ -15,7 +17,7 @@ public class OrderRepo {
                 .prepareStatement(sql);
 
         ResultSet resultSet = pvsm.executeQuery();
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             String orderId = resultSet.getString(1);
             return orderId;
         }
@@ -28,7 +30,7 @@ public class OrderRepo {
                 .prepareStatement(sql);
 
         ResultSet resultSet = pvsm.executeQuery();
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             String paymentId = resultSet.getString(1);
             return paymentId;
         }
@@ -47,6 +49,45 @@ public class OrderRepo {
 
         return pvsm.executeUpdate() > 0;
     }
+
+    public static Map<String, Integer> GetDailyOrderCounts() throws SQLException {
+
+            String sql = "SELECT orderDate, COUNT(OrderId) AS orderCount FROM orders GROUP BY orderDate ";
+            Map<String, Integer> orderDetails = new HashMap<>();
+
+            PreparedStatement pvsm = DbConnection.getConnection().prepareStatement(sql);
+
+            ResultSet resultSet = pvsm.executeQuery();
+
+            while (resultSet.next()) {
+
+                orderDetails.put(
+                        resultSet.getString("OrderDate"),
+                        resultSet.getInt("OrderCount")
+                );
+            }
+
+            return orderDetails;
+        }
+
+    public static Map<String, Integer> GetDailyIncome() throws SQLException {
+        String sql = "SELECT orderDate, SUM(orderId) AS totalIncome FROM orders GROUP BY orderDate";
+        Map<String, Integer> orderDetails = new HashMap<>();
+
+        PreparedStatement pvsm = DbConnection.getConnection().prepareStatement(sql);
+        ResultSet resultSet = pvsm.executeQuery();
+
+        while (resultSet.next()) {
+            orderDetails.put(
+                    resultSet.getString("orderDate"),
+                    resultSet.getInt("totalIncome")
+            );
+        }
+
+        return orderDetails;
+    }
 }
+
+
 
 

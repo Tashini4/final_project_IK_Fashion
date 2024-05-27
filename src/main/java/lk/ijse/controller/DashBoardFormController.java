@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,18 +13,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.db.DbConnection;
+import lk.ijse.repository.OrderRepo;
 
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Map;
 
 public class DashBoardFormController {
 
     @FXML
-    private BarChart<?, ?> ChartEmployee;
+    private BarChart<String , Number> ChartOrder;
 
     @FXML
-    private BarChart<?, ?> ChartSalary;
+    private BarChart<String , Number> ChartTotalIncome;
 
     @FXML
     private Label lb;
@@ -72,19 +75,49 @@ public class DashBoardFormController {
         setEmployeeCount(employeeCount);
 
         addChartEventHandlers();
+        addValueToOrderChart();
+        addValueToTotalIncomeChart();
+
     }
+    private void addValueToOrderChart() {
+        try {
+            Map<String, Integer> orderCounts = OrderRepo.GetDailyOrderCounts();
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            for (Map.Entry<String, Integer> entry : orderCounts.entrySet()) {
+                series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            }
+            ChartOrder.getData().add(series);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+    private void addValueToTotalIncomeChart() {
+        try {
+            Map<String, Integer> incomeCounts = OrderRepo.GetDailyIncome(); // Assuming this method exists
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            for (Map.Entry<String, Integer> entry : incomeCounts.entrySet()) {
+                series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            }
+            ChartTotalIncome.getData().add(series);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+
+
 
     private void addChartEventHandlers() {
-        ChartEmployee.setOnMouseClicked(this::handleChartEmployeeClick);
-        ChartSalary.setOnMouseClicked(this::handleChartSalaryClick);
+        ChartOrder.setOnMouseClicked(this::handleChartOrderClick);
+        ChartTotalIncome.setOnMouseClicked(this::handleChartTotalIncomeClick);
     }
 
-    private void handleChartSalaryClick(MouseEvent mouseEvent) {
-        System.out.println("Salary chart clicked");
+    private void handleChartOrderClick(MouseEvent mouseEvent) {
+        System.out.println("Order chart clicked");
     }
 
-    private void handleChartEmployeeClick(MouseEvent mouseEvent) {
-        System.out.println("Employee chart clicked");
+    private void handleChartTotalIncomeClick(MouseEvent mouseEvent) {
+        System.out.println(" Total Income chart clicked");
     }
 
     private int getEmployeeCount() throws SQLException {

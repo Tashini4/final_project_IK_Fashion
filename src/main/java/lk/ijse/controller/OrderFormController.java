@@ -499,7 +499,8 @@ public class OrderFormController {
 
             // Compile the Jasper report
             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            int discount =
+            Map<Double, Object> discout= new HashMap<>();
+            double discount = Double.parseDouble(txtDiscount.getText());
             // Fill the report
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DbConnection.getInstance().getConnection());
 

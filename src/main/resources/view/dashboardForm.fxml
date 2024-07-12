@@ -14,26 +14,26 @@
 
 <AnchorPane prefHeight="765.0" prefWidth="1471.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.DashBoardFormController">
    <children>
-      <AnchorPane layoutY="-1.0" prefHeight="800.0" prefWidth="265.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css">
+      <AnchorPane layoutY="-1.0" prefHeight="800.0" prefWidth="265.0" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css">
          <children>
-            <Button layoutX="27.0" layoutY="200.0" mnemonicParsing="false" onAction="#btnCustomerOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css" text="   Customer" textFill="WHITE">
+            <Button layoutX="27.0" layoutY="200.0" mnemonicParsing="false" onAction="#btnCustomerOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css" text="   Customer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
             <ImageView fitHeight="30.0" fitWidth="32.0" layoutX="53.0" layoutY="206.0" preserveRatio="true">
                <image>
-                  <Image url="@../icon/icons8-customer-50.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-customer-50.png" />
                </image>
             </ImageView>
-            <Button layoutX="27.0" layoutY="253.0" mnemonicParsing="false" onAction="#btnEmployeeOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css" text="   Employee" textFill="WHITE">
+            <Button layoutX="27.0" layoutY="253.0" mnemonicParsing="false" onAction="#btnEmployeeOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css" text="   Employee" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
             <ImageView fitHeight="30.0" fitWidth="32.0" layoutX="52.0" layoutY="422.0">
                <image>
-                  <Image url="@../KD_Aircon_packaging.pngFinal_project/src/main/resources/Icon/packaging.png" />
+                  <Image url="@../packaging.png" />
                </image>
             </ImageView>
             <Button layoutX="27.0" layoutY="307.0" mnemonicParsing="false" onAction="#btnStockOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" text=" Stock" textFill="WHITE">
@@ -43,12 +43,12 @@
             </Button>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="46.0" layoutY="313.0" preserveRatio="true">
                <image>
-                  <Image url="@../icon/icons8-stock-50.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-stock-50.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="36.0" fitWidth="32.0" layoutX="44.0" layoutY="258.0" preserveRatio="true">
                <image>
-                  <Image url="@../icon/icons8-customers-50.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-customers-50.png" />
                </image>
             </ImageView>
             <Button layoutX="37.0" layoutY="746.0" mnemonicParsing="false" onAction="#btnLogOutOnAction" prefHeight="43.0" prefWidth="146.0" style="-fx-background-color: Transparent;" text="   Log Out" textFill="WHITE">
@@ -58,12 +58,12 @@
             </Button>
             <ImageView fitHeight="30.0" fitWidth="32.0" layoutX="46.0" layoutY="753.0" preserveRatio="true">
                <image>
-                  <Image url="@../icon/logout.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/logout.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="150.0" fitWidth="138.0" layoutX="61.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icon/Layer%200%20Frame%20(1).png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/logo.png" />
                </image>
             </ImageView>
             <Button layoutX="27.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnSalaryOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" text="Salary" textFill="WHITE">
@@ -73,7 +73,7 @@
             </Button>
             <ImageView layoutX="46.0" layoutY="422.0">
                <image>
-                  <Image url="@../icon/icons8-money-30.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-money-30.png" />
                </image>
             </ImageView>
             <Button layoutX="27.0" layoutY="475.0" mnemonicParsing="false" onAction="#btnSupplierOnAction" prefHeight="42.0" prefWidth="206.0" styleClass="backgroundColour2" text="Supplier" textFill="WHITE">
@@ -93,17 +93,17 @@
             </Button>
             <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="44.0" layoutY="369.0">
                <image>
-                  <Image url="@../icon/icons8-register-50.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-register-50.png" />
                </image>
             </ImageView>
             <ImageView layoutX="45.0" layoutY="481.0">
                <image>
-                  <Image url="@../icon/icons8-add-30.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-add-30.png" />
                </image>
             </ImageView>
             <ImageView layoutX="54.0" layoutY="541.0">
                <image>
-                  <Image url="@../icon/icons8-order-32.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-order-32.png" />
                </image>
             </ImageView>
          </children>
@@ -111,7 +111,7 @@
             <DropShadow />
          </effect>
       </AnchorPane>
-      <AnchorPane fx:id="rootNode" layoutX="262.0" prefHeight="800.0" prefWidth="1500.0" style="-fx-background-insets: #182C61;" styleClass="backgroundColour2" stylesheets="@../css/Style.css">
+      <AnchorPane fx:id="rootNode" layoutX="262.0" prefHeight="800.0" prefWidth="1500.0" style="-fx-background-insets: #182C61;" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css">
          <children>
             <Label layoutX="44.0" layoutY="22.0" prefHeight="59.0" prefWidth="385.0" text="Dashboard" textFill="WHITE" underline="true">
                <font>
@@ -124,7 +124,7 @@
                </effect></TextField>
             <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="1398.0" layoutY="58.0">
                <image>
-                  <Image url="@../icon/icons8-search-30.png" />
+                  <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-search-30.png" />
                </image>
             </ImageView>
             <Label layoutX="1041.0" layoutY="29.0" text="Search" />
@@ -135,14 +135,14 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblCustomerCount" layoutX="89.0" layoutY="28.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="109.0" stylesheets="@../css/Style1.css" text="0">
+                  <Label fx:id="lblCustomerCount" layoutX="89.0" layoutY="28.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="109.0" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style1.css" text="0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <ImageView layoutX="27.0" layoutY="16.0" preserveRatio="true">
                      <image>
-                        <Image url="@../icon/icons8-customers-50.png" />
+                        <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-customers-50.png" />
                      </image>
                   </ImageView>
                </children>
@@ -164,7 +164,7 @@
                   </Label>
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="33.0" layoutY="16.0">
                      <image>
-                        <Image url="@../icon/icons8-order-32.png" />
+                        <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-order-32.png" />
                      </image>
                   </ImageView>
                </children>
@@ -186,7 +186,7 @@
                   </Label>
                   <ImageView layoutX="38.0" layoutY="18.0">
                      <image>
-                        <Image url="@../icon/icons8-open-box-50.png" />
+                        <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-open-box-50.png" />
                      </image>
                   </ImageView>
                </children>
@@ -208,7 +208,7 @@
                   </Label>
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="13.0">
                      <image>
-                        <Image url="@../icon/icons8-user-30.png" />
+                        <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-user-30.png" />
                      </image>
                   </ImageView>
                </children>
@@ -230,7 +230,7 @@
                   </Label>
                   <ImageView fitHeight="63.0" fitWidth="66.0" layoutX="25.0" layoutY="15.0">
                      <image>
-                        <Image url="@../icon/icons8-employee-30.png" />
+                        <Image url="@../../../../../IkFashion_layered Architecture/src/main/resources/icon/icons8-employee-30.png" />
                      </image>
                   </ImageView>
                </children>

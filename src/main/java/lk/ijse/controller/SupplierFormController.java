@@ -14,10 +14,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import lk.ijse.model.Supplier;
-import lk.ijse.model.tm.SupplierTm;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.SupplierBO;
+import lk.ijse.dto.SupplierDTO;
+import lk.ijse.entity.Supplier;
+import lk.ijse.tm.SupplierTm;
 
-import lk.ijse.repository.SupplierRepo;
+import lk.ijse.dao.custom.impl.SupplierDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,6 +64,8 @@ public class SupplierFormController {
     @FXML
     private TextField txtName;
 
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.SUPPLIER);
+
     public void initialize(){
         setCellValueFactory();
         loadAllSupplier();
@@ -80,8 +85,8 @@ public class SupplierFormController {
         ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Supplier> supplierList = SupplierRepo.getAll();
-            for (Supplier supplier : supplierList) {
+            List<SupplierDTO> supplierList = supplierBO.getAll();
+            for (SupplierDTO supplier : supplierList) {
                 SupplierTm tm = new SupplierTm(
                         supplier.getSupplierId(),
                         supplier.getSupplierName(),
@@ -93,6 +98,8 @@ public class SupplierFormController {
             }
             tblSupplier.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -109,12 +116,12 @@ public class SupplierFormController {
 
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
-        AnchorPane rootNode = FXMLLoader.load(getClass().getResource("/view/stockForm.fxml"));
+        AnchorPane rootNode = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
         Scene scene = new Scene(rootNode);
 
         Stage stage = (Stage) this.rootNode.getScene().getWindow();
         stage.setScene(scene);
-        stage.setTitle("Stock Form");
+        stage.setTitle("dashboard form");
     }
 
     @FXML
@@ -135,13 +142,15 @@ public class SupplierFormController {
         String id = txtId.getText();
 
         try {
-            boolean Delete = SupplierRepo.delete(id);
+            boolean Delete = supplierBO.delete(id);
             if(Delete) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier deleted!").show();
                 clearFields();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -153,10 +162,10 @@ public class SupplierFormController {
         String address = txtAddress.getText();
         String contact = txtContact.getText();
 
-        Supplier supplier = new Supplier(id, name, email , address,contact );
+       // Supplier supplier = new Supplier(id, name, email , address,contact );
 
         try {
-            boolean Save = SupplierRepo.save(supplier);
+            boolean Save = supplierBO.save(new SupplierDTO(id,name,email,address,contact));
             if (Save) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier saved!").show();
                 loadAllSupplier();
@@ -164,6 +173,8 @@ public class SupplierFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -176,16 +187,18 @@ public class SupplierFormController {
         String contact = txtContact.getText();
 
 
-        Supplier supplier = new Supplier(id, name,email,address,contact);
+      //  Supplier supplier = new Supplier(id, name,email,address,contact);
 
         try {
-            boolean Update = SupplierRepo.update(supplier);
+            boolean Update = supplierBO.update(new SupplierDTO(id,name,email,address,contact));
             if(Update) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier updated!").show();
                 loadAllSupplier();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

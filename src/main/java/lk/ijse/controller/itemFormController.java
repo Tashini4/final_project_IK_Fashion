@@ -14,11 +14,15 @@ import javafx.stage.Stage;
 
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
-import lk.ijse.model.Inventory;
-import lk.ijse.model.Item;
-import lk.ijse.model.tm.ItemTm;
-import lk.ijse.repository.InventoryRepo;
-import lk.ijse.repository.ItemRepo;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.InventoryBO;
+import lk.ijse.bo.ItemBO;
+import lk.ijse.dto.ItemDTO;
+import lk.ijse.entity.Inventory;
+import lk.ijse.entity.Item;
+import lk.ijse.tm.ItemTm;
+import lk.ijse.dao.custom.impl.InventoryDAOImpl;
+import lk.ijse.dao.custom.impl.ItemDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -74,6 +78,9 @@ public class itemFormController {
     @FXML
     private TextField txtQtyOnHand;
 
+    ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.ITEM);
+    InventoryBO inventoryBO = (InventoryBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.INVENTORY);
+
     public void initialize(){
         setCellValueFactory();
         loadAllItem();
@@ -114,14 +121,13 @@ public class itemFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> idList =  InventoryRepo.getIds();
-
-            for (String id : idList){
-                obList.add(id);
-            }
+            List<String> idList =  inventoryBO.getIds();
+            obList.addAll(idList);
             cmbInventoryId.setItems(obList);
         }catch(SQLException e){
             throw new RuntimeException();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -129,8 +135,8 @@ public class itemFormController {
         ObservableList<ItemTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Item> itemList = ItemRepo.getAll();
-            for (Item item : itemList){
+            List<ItemDTO> itemList = itemBO.getAll();
+            for (ItemDTO item : itemList){
                 ItemTm tm = new ItemTm(
                         item.getItemId(),
                         item.getDescription(),
@@ -143,7 +149,7 @@ public class itemFormController {
                 obList.add(tm);
             }
             tblItem.setItems(obList);
-        }catch (SQLException e){
+        }catch (SQLException | ClassNotFoundException e){
             throw new RuntimeException();
         }
     }
@@ -159,7 +165,7 @@ public class itemFormController {
     }
 
     @FXML
-    void btnAddOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) {
         String itemId = txtItemId.getText();
         String description = txtDescription.getText();
         String brand = txtBrand.getText();
@@ -168,16 +174,18 @@ public class itemFormController {
         int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
         String inventoryId = (String) cmbInventoryId.getValue();
 
-        Item item = new Item(itemId,description,brand,size,price,qtyOnHand,inventoryId);
+        //Item item = new Item(itemId,description,brand,size,price,qtyOnHand,inventoryId);
 
         try {
-            boolean isAdded = ItemRepo.add(item);
+            boolean isAdded = itemBO.save(new ItemDTO(itemId,description,brand,size,price,qtyOnHand,inventoryId));
             if (isAdded){
                 new Alert(Alert.AlertType.CONFIRMATION,"Item added!").show();
                 loadAllItem();
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -210,12 +218,12 @@ public class itemFormController {
         String id = txtItemId.getText();
 
         try {
-            boolean isDeleted = ItemRepo.delete(id);
+            boolean isDeleted = itemBO.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Item deleted!").show();
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -230,16 +238,18 @@ public class itemFormController {
         int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
         String inventoryId = (String) cmbInventoryId.getValue();
 
-       Item item = new Item(itemId, description,brand,size,price,qtyOnHand,inventoryId);
+       //Item item = new Item(itemId, description,brand,size,price,qtyOnHand,inventoryId);
 
         try {
-            boolean isUpdated = ItemRepo.update(item);
+            boolean isUpdated = itemBO.update(new ItemDTO(itemId,description,brand,size,price,qtyOnHand, inventoryId));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "item updated!").show();
                 loadAllItem();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -247,11 +257,10 @@ public class itemFormController {
     void cmbInventoryOnAction(ActionEvent event) {
         String inventoryId = cmbInventoryId.getValue();
         try {
-            Inventory inventory = InventoryRepo.searchById(inventoryId);
+            Inventory inventory = inventoryDAOImpl.searchById(inventoryId);
+            cmbInventoryId.setValue(inventory.getInventoryId());
 
-           cmbInventoryId.setValue(inventory.getInventoryId());
-
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -262,10 +271,10 @@ public class itemFormController {
     }
 
     @FXML
-    void txtSearchOnAction(ActionEvent event) throws SQLException {
+    void txtSearchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String itemId = txtItemId.getText();
 
-       Item item = ItemRepo.searchById(itemId);
+       Item item = itemBO.searchById(itemId);
         if (item != null) {
             txtItemId.setText(item.getItemId());
             txtDescription.setText(item.getDescription());

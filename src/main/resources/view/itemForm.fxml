@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.itemFormController">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.itemFormController">
    <children>
       <Label layoutX="547.0" layoutY="29.0" text="Item Manage System" textFill="#101010">
          <font>
@@ -65,7 +65,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="833.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: gray;" text="Add" textFill="WHITE">
+      <Button layoutX="833.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: gray;" text="Add" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

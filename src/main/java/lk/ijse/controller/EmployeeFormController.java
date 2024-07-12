@@ -1,6 +1,5 @@
 package lk.ijse.controller;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +13,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
-import lk.ijse.model.Customer;
-import lk.ijse.model.Employee;
-import lk.ijse.model.tm.EmployeeTm;
-import lk.ijse.repository.CustomerRepo;
-import lk.ijse.repository.EmployeeRepo;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.EmployeeBO;
+import lk.ijse.dao.custom.EmployeeDAO;
+import lk.ijse.dto.EmployeeDTO;
+import lk.ijse.entity.Employee;
+import lk.ijse.tm.EmployeeTm;
+import lk.ijse.dao.custom.impl.EmployeeDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -83,6 +84,8 @@ public class EmployeeFormController {
     @FXML
     private TextField txtName;
 
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.EMPLOYEE);
+
     public void initialize(){
         setCellValueFactory();
         loadAllEmployee();
@@ -122,8 +125,8 @@ public class EmployeeFormController {
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Employee> employeeList = EmployeeRepo.getAll();
-            for (Employee employee : employeeList){
+            List<EmployeeDTO> employeeList = employeeBO.getAll();
+            for (EmployeeDTO employee : employeeList){
                 EmployeeTm tm = new EmployeeTm(
                         employee.getEmployeeId(),
                         employee.getEmployeeName(),
@@ -136,6 +139,8 @@ public class EmployeeFormController {
             }
             tblEmployee.setItems(obList);
         }catch (SQLException e){
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -169,13 +174,16 @@ public class EmployeeFormController {
         String id = txtId.getText();
 
         try {
-            boolean Delete = EmployeeRepo.delete(id);
+            boolean Delete = employeeBO.delete(id);
             if (Delete){
                 new Alert(Alert.AlertType.CONFIRMATION,"Employee Deleted!").show();
+                loadAllEmployee();
                 clearFields();
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -188,10 +196,10 @@ public class EmployeeFormController {
         String address = txtAddress.getText();
         String gender = cmbGender.getValue();
 
-        Employee employee = new Employee(id,name,email,contact,address,gender);
+       // Employee employee = new Employee(id,name,email,contact,address,gender);
 
         try {
-            boolean Save = EmployeeRepo.save(employee);
+            boolean Save = employeeBO.save(new EmployeeDTO(id,name,email,contact,address,gender));
             if(Save){
                 new Alert(Alert.AlertType.CONFIRMATION,"employee Saved!").show();
                 loadAllEmployee();
@@ -199,6 +207,8 @@ public class EmployeeFormController {
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -211,24 +221,26 @@ public class EmployeeFormController {
         String address = txtAddress.getText();
         String gender = cmbGender.getValue();
 
-        Employee employee = new Employee(id,name,email,contact,address,gender);
+        //Employee employee = new Employee(id,name,email,contact,address,gender);
 
         try {
-            boolean Update = EmployeeRepo.update(employee);
+            boolean Update = employeeBO.update(new EmployeeDTO(id,name,email,contact,address,gender));
             if(Update){
                 new Alert(Alert.AlertType.CONFIRMATION,"employee Update!").show();
                 loadAllEmployee();
-                clearFields();
+               
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     @FXML
-    void txtSearchOnAction(ActionEvent event) throws SQLException {
+    void txtSearchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = txtId.getText();
 
-        Employee employee = EmployeeRepo.searchById(id);
+        Employee employee = employeeBO.searchById(id);
         if (employee != null) {
             txtId.setText(employee.getEmployeeId());
             txtName.setText(employee.getEmployeeName());

@@ -13,7 +13,7 @@
 
 <!--<AnchorPane fx:id="rootNode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">-->
 
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SalaryFormController">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SalaryFormController">
    <children>
       <Label layoutX="438.0" layoutY="33.0" prefHeight="45.0" prefWidth="486.0" text="Salary Manage System" textFill="#070707">
          <font>

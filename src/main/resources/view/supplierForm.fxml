@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootNode" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SupplierFormController">
+<AnchorPane fx:id="rootNode" prefHeight="800.0" prefWidth="1500.0" styleClass="backgroundColour2" stylesheets="@../../../../../IkFashion_layered Architecture/src/main/resources/css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.SupplierFormController">
    <children>
       <Label layoutX="519.0" layoutY="27.0" text=" Supplier Manage System">
          <font>

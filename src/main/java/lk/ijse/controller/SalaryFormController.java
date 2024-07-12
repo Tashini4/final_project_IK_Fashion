@@ -13,12 +13,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
-import lk.ijse.model.Employee;
-import lk.ijse.model.Salary;
-import lk.ijse.model.tm.SalaryTm;
-import lk.ijse.repository.EmployeeRepo;
-import lk.ijse.repository.ItemRepo;
-import lk.ijse.repository.SalaryRepo;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.EmployeeBO;
+import lk.ijse.bo.SalaryBO;
+import lk.ijse.dao.custom.SalaryDAO;
+import lk.ijse.dto.SalaryDTO;
+import lk.ijse.entity.Employee;
+import lk.ijse.entity.Salary;
+import lk.ijse.tm.SalaryTm;
+import lk.ijse.dao.custom.impl.EmployeeDAOImpl;
+import lk.ijse.dao.custom.impl.SalaryDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -64,6 +68,8 @@ public class SalaryFormController {
 
     @FXML
     private TextField txtSalaryId;
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.EMPLOYEE);
+    SalaryBO salaryBO = (SalaryBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.SALARY);
 
     public void initialize(){
         loadAllSalary();
@@ -84,14 +90,13 @@ public class SalaryFormController {
     private void getEmployeeIds() {
         ObservableList<String>  obList = FXCollections.observableArrayList();
         try {
-            List<String> idList = EmployeeRepo.getIds();
-
-            for (String id : idList){
-                obList.add(id);
-            }
+            List<String> idList = employeeBO.getIds();
+            obList.addAll(idList);
             cmbEmployeeId.setItems(obList);
         }catch (SQLException e){
             showAlert(Alert.AlertType.ERROR, "Error occurred while fetching Items IDs: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -112,8 +117,8 @@ public class SalaryFormController {
         ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Salary> salaryList = SalaryRepo.getAll();
-            for (Salary salary : salaryList){
+            List<SalaryDTO> salaryList = salaryBO.getAll();
+            for (SalaryDTO salary : salaryList){
                 SalaryTm tm = new SalaryTm(
                         salary.getSalaryId(),
                         salary.getSalaryDate(),
@@ -125,6 +130,8 @@ public class SalaryFormController {
             tblSalary.setItems(obList);
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -159,10 +166,10 @@ public class SalaryFormController {
         String amount = txtAmount.getText();
         String employeeId = (String) cmbEmployeeId.getValue();
 
-        Salary salary = new Salary(salaryId,date,amount,employeeId);
+        //Salary salary = new Salary(salaryId,date,amount,employeeId);
 
         try {
-            boolean Save = SalaryRepo.save(salary);
+            boolean Save = salaryBO.save(new SalaryDTO(salaryId,date,amount,employeeId));
             if (Save){
                 new Alert(Alert.AlertType.CONFIRMATION,"Salary saved!").show();
                 loadAllSalary();
@@ -170,6 +177,8 @@ public class SalaryFormController {
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -180,10 +189,10 @@ public class SalaryFormController {
         String amount = txtAmount.getText();
         String employeeId = (String) cmbEmployeeId.getValue();
 
-        Salary salary = new Salary(salaryId,date,amount,employeeId);
+        // Salary salary = new Salary(salaryId,date,amount,employeeId);
 
         try {
-            boolean Update = SalaryRepo.update(salary);
+            boolean Update = salaryBO.update(new SalaryDTO(salaryId,date,amount,employeeId));
             if (Update){
                 new Alert(Alert.AlertType.CONFIRMATION,"Salary updated!").show();
                 loadAllSalary();
@@ -191,6 +200,8 @@ public class SalaryFormController {
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -199,18 +210,20 @@ public class SalaryFormController {
         String id = cmbEmployeeId.getValue();
 
         try {
-            Employee employee = EmployeeRepo.searchById(id);
+            Employee employee = employeeBO.searchById(id);
             cmbEmployeeId.setValue(employee.getEmployeeId());
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
-    void txtSearchOnAction(ActionEvent event) throws SQLException {
+    void txtSearchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = txtSalaryId.getText();
 
-        Salary salary = SalaryRepo.searchById(id);
+        Salary salary = salaryBO.searchById(id);
         if (salary != null) {
             txtSalaryId.setText(salary.getSalaryId());
             txtDate.setText(salary.getSalaryDate());

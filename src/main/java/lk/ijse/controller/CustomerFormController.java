@@ -16,9 +16,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
-import lk.ijse.model.Customer;
-import lk.ijse.model.tm.CustomerTm;
-import lk.ijse.repository.CustomerRepo;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.CustomerBO;
+import lk.ijse.dao.custom.CustomerDAO;
+import lk.ijse.dto.CustomerDTO;
+import lk.ijse.entity.Customer;
+import lk.ijse.tm.CustomerTm;
+import lk.ijse.dao.custom.impl.CustomerDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -62,6 +66,8 @@ public class CustomerFormController {
     @FXML
     private TextField txtName;
 
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.CUSTOMER);
+
     public void initialize() {
         setCellValueFactory();
         loadAllCustomer();
@@ -82,8 +88,8 @@ public class CustomerFormController {
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Customer> customerList = CustomerRepo.getAll();
-            for (Customer customer : customerList) {
+            List<CustomerDTO> customerList = customerBO.getAll();
+            for (CustomerDTO customer : customerList) {
                 CustomerTm tm = new CustomerTm(
                         customer.getCustomerId(),
                         customer.getCustomerName(),
@@ -94,7 +100,7 @@ public class CustomerFormController {
                 obList.add(tm);
             }
             tblCustomer.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException();
         }
     }
@@ -135,11 +141,13 @@ public class CustomerFormController {
         String id = txtId.getText();
 
         try {
-            boolean isDeleted = CustomerRepo.delete(id);
+            boolean isDeleted = customerBO.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer deleted!").show();
+                loadAllCustomer();
+                clearFields();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -152,17 +160,17 @@ public class CustomerFormController {
         String contact = txtContact.getText();
         String address = txtAddress.getText();
 
-        Customer customer = new Customer(id, name, email, contact, address);
-
         try {
             if (isValied()){}
-            boolean isSaved = CustomerRepo.save(customer);
+            boolean isSaved = customerBO.save(new CustomerDTO(id,name,email,contact,address));
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
                 loadAllCustomer();
                 clearFields();
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -175,16 +183,18 @@ public class CustomerFormController {
         String contact = txtContact.getText();
         String address = txtAddress.getText();
 
-        Customer customer = new Customer(id, name, email, contact, address);
+//Customer customer = new Customer(id, name, email, contact, address);
 
         try {
-            boolean isUpdated = CustomerRepo.update(customer);
+            boolean isUpdated = customerBO.update(new CustomerDTO(id,name,email,contact,address));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
                 loadAllCustomer();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -199,14 +209,11 @@ public class CustomerFormController {
 
         return true;
     }
-
-
-
     @FXML
-    void txtSearchOnAction(ActionEvent event) throws SQLException {
+    void txtSearchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = txtId.getText();
 
-        Customer customer = CustomerRepo.searchById(id);
+        Customer customer = customerBO.searchById(id);
         if (customer != null) {
             txtId.setText(customer.getCustomerId());
             txtName.setText(customer.getCustomerName());

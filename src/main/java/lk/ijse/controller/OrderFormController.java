@@ -17,13 +17,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.CustomerBO;
+import lk.ijse.bo.ItemBO;
+import lk.ijse.dao.custom.OrderDAO;
 import lk.ijse.db.DbConnection;
-import lk.ijse.model.*;
-import lk.ijse.model.tm.CartTm;
-import lk.ijse.repository.CustomerRepo;
-import lk.ijse.repository.ItemRepo;
-import lk.ijse.repository.OrderRepo;
-import lk.ijse.repository.PlaceOrderRepo;
+import lk.ijse.entity.*;
+import lk.ijse.tm.CartTm;
+import lk.ijse.dao.custom.impl.ItemDAOImpl;
+import lk.ijse.dao.custom.impl.OrderDAOImpl;
+import lk.ijse.dao.custom.PlaceOrderDAO;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -130,6 +133,10 @@ public class OrderFormController {
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
     private double discount;
 
+   //CustomerDAOImpl  customerDAOImpl = new CustomerDAOImpl();
+   CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.CUSTOMER);
+   ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.ITEM);
+   OrderDAO orderDAO= new OrderDAOImpl();;
 
 
     public void initialize() {
@@ -188,12 +195,12 @@ public class OrderFormController {
 
     private void getCurrentOrderId() {
         try {
-            String currentId = OrderRepo.getCurrentId();
+            String currentId = orderDAO.getCurrentId();
 
             String nextOrderId = generateNextOrderId(currentId);
             lblOrderId.setText(nextOrderId);
 
-        }catch (SQLException e){
+        }catch (SQLException | ClassNotFoundException e){
             throw new RuntimeException();
         }
     }
@@ -211,7 +218,7 @@ public class OrderFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> idList =  CustomerRepo.getIds();
+            List<String> idList =  customerBO.getIds();
 
             for (String id : idList){
                 obList.add(id);
@@ -219,13 +226,15 @@ public class OrderFormController {
             cmbCustomerId.setItems(obList);
         }catch(SQLException e){
             throw new RuntimeException();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void getItemIds() {
         ObservableList<String>  obList = FXCollections.observableArrayList();
         try {
-            List<String> idList = ItemRepo.getIds();
+            List<String> idList = itemBO.getIds();
 
             for (String id : idList){
                 obList.add(id);
@@ -233,6 +242,8 @@ public class OrderFormController {
             cmbItemId.setItems(obList);
         }catch (SQLException e){
             showAlert(Alert.AlertType.ERROR, "Error occurred while fetching Items IDs: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -314,7 +325,7 @@ public class OrderFormController {
     void btnBackOnAction(ActionEvent event) throws IOException {
         Button btn = (Button) event.getSource();
         Stage stage = (Stage) btn.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/stockForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboardForm.fxml"));
         Parent rootNode = loader.load();
 
         Scene scene = new Scene(rootNode);
@@ -373,7 +384,7 @@ public class OrderFormController {
         Payment payment = new Payment(paymentId,amount,date);
         PlaceOrder po = new PlaceOrder(order,odList,payment);
 
-        boolean isPlaced = PlaceOrderRepo.placeOrder(po);
+        boolean isPlaced = PlaceOrderDAO.placeOrder(po);
 
         if (isPlaced){
             obList.clear();
@@ -405,12 +416,14 @@ public class OrderFormController {
 
     private void getCurrentPaymentId() {
         try {
-            String currentId = OrderRepo.getPayCurrentId();
+            String currentId = orderDAO.getPayCurrentId();
 
             String nextPayId = generateNextPay(currentId);
             lblPaymentId.setText(nextPayId);
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -433,11 +446,13 @@ public class OrderFormController {
     void cmbCustomerIdOnAction(ActionEvent event) {
         String id = cmbCustomerId.getValue();
         try {
-            Customer customer = CustomerRepo.searchById(id);
+            Customer customer = customerBO.searchById(id);
 
             lblCustomerName.setText(customer.getCustomerName());
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -446,7 +461,7 @@ public class OrderFormController {
     void cmbItemIdOnAction(ActionEvent event) {
         String id = String.valueOf(cmbItemId.getValue());
         try {
-            Item item = ItemRepo.searchById(id);
+            Item item = itemBO.searchById(id);
 
             lblDescription.setText(item.getDescription());
             lblUnitPrice.setText(String.valueOf(item.getPrice()));
@@ -454,6 +469,8 @@ public class OrderFormController {
 
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

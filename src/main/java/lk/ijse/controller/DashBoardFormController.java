@@ -12,8 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.dao.custom.OrderDAO;
 import lk.ijse.db.DbConnection;
-import lk.ijse.repository.OrderRepo;
+import lk.ijse.dao.custom.impl.OrderDAOImpl;
 
 
 import java.io.IOException;
@@ -57,6 +58,8 @@ public class DashBoardFormController {
     @FXML
     private TextField txtSearch;
 
+
+    OrderDAO orderDAO = new OrderDAOImpl();
     public void initialize(){
         try{
             customerCount = getCustomerCount();
@@ -80,8 +83,9 @@ public class DashBoardFormController {
 
     }
     private void addValueToOrderChart() {
+
         try {
-            Map<String, Integer> orderCounts = OrderRepo.GetDailyOrderCounts();
+            Map<String, Integer> orderCounts = orderDAO.GetDailyOrderCounts();
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             for (Map.Entry<String, Integer> entry : orderCounts.entrySet()) {
                 series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
@@ -89,11 +93,13 @@ public class DashBoardFormController {
             ChartOrder.getData().add(series);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     private void addValueToTotalIncomeChart() {
         try {
-            Map<String, Integer> incomeCounts = OrderRepo.GetDailyIncome(); // Assuming this method exists
+            Map<String, Integer> incomeCounts = orderDAO.GetDailyIncome(); // Assuming this method exists
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             for (Map.Entry<String, Integer> entry : incomeCounts.entrySet()) {
                 series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
@@ -101,6 +107,8 @@ public class DashBoardFormController {
             ChartTotalIncome.getData().add(series);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

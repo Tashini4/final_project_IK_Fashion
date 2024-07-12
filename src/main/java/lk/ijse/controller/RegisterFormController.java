@@ -17,14 +17,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
-import lk.ijse.model.Register;
-import lk.ijse.model.tm.RegisterTm;
+import lk.ijse.bo.BOFactory;
+import lk.ijse.bo.RegisterBO;
+import lk.ijse.dto.RegisterDTO;
+import lk.ijse.entity.Register;
+import lk.ijse.tm.RegisterTm;
 
-import lk.ijse.repository.RegisterRepo;
+import lk.ijse.dao.custom.impl.RegisterDAOImpl;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class RegisterFormController {
     @FXML
     private TextField txtRegisterId;
 
+    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.REGISTER);
+
     public void initialize() {
         setCellValueFactory();
         loadAllCustomers();
@@ -87,8 +90,8 @@ public class RegisterFormController {
         ObservableList<RegisterTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Register> registerList = RegisterRepo.getAll();
-            for (Register register : registerList) {
+            List<RegisterDTO> registerList = registerBO.getAll();
+            for (RegisterDTO register : registerList) {
                 RegisterTm tm = new RegisterTm(
                         register.getRegisterId(),
                         register.getRegiterName(),
@@ -99,6 +102,8 @@ public class RegisterFormController {
             }
             tblRegister.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -118,12 +123,14 @@ public class RegisterFormController {
         String id = txtRegisterId.getText();
 
         try {
-            boolean Delete = RegisterRepo.delete(id);
+            boolean Delete = registerBO.delete(id);
             if (Delete) {
                 new Alert(Alert.AlertType.CONFIRMATION, "User Deleted").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -135,14 +142,16 @@ public class RegisterFormController {
         String password = txtPassword.getText();
 
 
-        Register register = new Register(registerId, name, position, password);
+        //Register register = new Register(registerId, name, position, password);
 
         try {
-            boolean Save = RegisterRepo.save(register);
+            boolean Save = registerBO.save(new RegisterDTO(registerId,name,position,password));
             if (Save) {
                 new Alert(Alert.AlertType.CONFIRMATION, " User saved!").show();
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -156,22 +165,24 @@ public class RegisterFormController {
         String password = txtPassword.getText();
 
 
-        Register register = new Register(registerId, name, position, password);
+       // Register register = new Register(registerId, name, position, password);
 
         try {
-            boolean Update = RegisterRepo.update(register);
+            boolean Update = registerBO.update(new RegisterDTO(registerId,name,position,password));
             if (Update) {
                 new Alert(Alert.AlertType.CONFIRMATION, "User updated!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    void txtSearchOnAction(ActionEvent event) throws SQLException {
+    void txtSearchOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = txtRegisterId.getText();
 
-        Register register = RegisterRepo.searchById(id);
+        Register register = registerBO.searchById(id);
         if (register != null) {
             txtRegisterId.setText(register.getRegisterId());
             txtName.setText(register.getRegiterName());

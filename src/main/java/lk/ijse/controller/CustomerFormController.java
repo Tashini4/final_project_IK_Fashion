@@ -18,11 +18,11 @@ import lk.ijse.Util.CustomerRegex;
 import lk.ijse.Util.CustomerTextField;
 import lk.ijse.bo.BOFactory;
 import lk.ijse.bo.CustomerBO;
-import lk.ijse.dao.custom.CustomerDAO;
+
 import lk.ijse.dto.CustomerDTO;
 import lk.ijse.entity.Customer;
 import lk.ijse.tm.CustomerTm;
-import lk.ijse.dao.custom.impl.CustomerDAOImpl;
+
 
 import java.io.IOException;
 import java.sql.SQLException;

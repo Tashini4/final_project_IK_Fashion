@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface OrderDAO extends CrudDAO<Order> {
-    public String getCurrentId() throws SQLException, ClassNotFoundException
+    public String getCurrentId() throws SQLException, ClassNotFoundException;
 
-    public String getPayCurrentId() throws SQLException, ClassNotFoundException
+    public String getPayCurrentId() throws SQLException, ClassNotFoundException;
 
     public boolean save(Order order) throws SQLException, ClassNotFoundException;
 
